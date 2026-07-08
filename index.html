@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maths Heads · Teacher · Year 5 Term 3</title>
+<style>
+  :root{
+    --bg0:#262038; --bg1:#302a44; --bg2:#3a3450;
+    --ink:#fcfaf8; --ink-dim:#ddd6ec; --ink-faint:#a89cb8;
+    --panel:#443c5c; --panel2:#504868; --line:#6a6284;
+    --chip-bg:#38324c;
+    --cream:#fff8ed; --cream-ink:#2a2018;
+    --gold:#e8b838; --gold2:#ffe8a0;
+    --accent:#e8a838;
+    --t1:#7ed99a; --t2:#f0c850; --t3:#f09888;
+    --notice-bg:#faf0e6; --notice-ink:#3d2818; --notice-border:#e8a838;
+    --radius:18px;
+    --font:"Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--font);color:var(--ink);background:var(--bg0);overflow:hidden;}
+  #app{width:100vw;height:100vh;display:flex;flex-direction:column;}
+  #stageWrap{flex:1;display:flex;align-items:center;justify-content:center;padding:14px 14px 4px;min-height:0;}
+  .slide{
+    position:relative;width:min(1180px,100%);aspect-ratio:16/10;max-height:100%;
+    background:radial-gradient(1100px 480px at 75% -8%, rgba(240,192,64,.14), transparent 55%), linear-gradient(155deg,var(--bg1),#3e3858 55%,var(--bg2));
+    border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 24px 60px rgba(12,8,24,.38);
+    padding:22px 34px 42px;overflow:hidden;display:flex;flex-direction:column;
+  }
+  .slide.map-slide{overflow:auto;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:rgba(240,192,64,.16);color:#ffe8b0;border:1px solid rgba(240,192,64,.35);
+    font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:11px;padding:6px 12px;border-radius:999px;margin-bottom:8px;}
+  h1.title{font-size:clamp(24px,3.2vw,40px);line-height:1.05;margin:6px 0 10px;}
+  .sub{color:var(--ink-dim);font-size:clamp(14px,1.4vw,17px);line-height:1.4;margin-bottom:10px;}
+  .timing{display:inline-flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+  .timing span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--ink-dim);}
+  .body-scroll{flex:1;min-height:0;overflow:auto;}
+  .card{border-radius:var(--radius);padding:16px 18px;}
+  .card.cream{background:var(--cream);color:var(--cream-ink);box-shadow:0 6px 20px rgba(20,12,8,.12);}
+  .card.dark{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);}
+  .card.hook-card{background:linear-gradient(135deg,#524878,#403860);border:2px solid rgba(240,192,64,.5);}
+  .card h3{font-size:clamp(16px,1.8vw,20px);margin-bottom:8px;}
+  .card.cream p,.card.cream li{font-size:clamp(14px,1.35vw,17px);line-height:1.45;}
+  .card.cream ul,.card.cream ol{margin:6px 0 6px 18px;}
+  .notice{margin-top:10px;background:var(--notice-bg);border-left:5px solid var(--notice-border);color:var(--notice-ink);padding:9px 12px;border-radius:10px;font-size:14px;}
+  .hook-q{font-size:clamp(20px,2.6vw,30px);font-weight:800;line-height:1.25;color:#fff0c8;margin:8px 0;}
+  .diag-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex:1;min-height:0;}
+  .diag-cell{border-radius:14px;padding:14px;border:2px solid var(--line);display:flex;flex-direction:column;min-height:0;}
+  .diag-cell.t1{border-color:rgba(126,217,154,.6);background:rgba(126,217,154,.12);}
+  .diag-cell.t2{border-color:rgba(240,200,80,.6);background:rgba(240,200,80,.12);}
+  .diag-cell.t3{border-color:rgba(240,152,136,.6);background:rgba(240,152,136,.12);}
+  .diag-lbl{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
+  .diag-lbl.t1{color:var(--t1)} .diag-lbl.t2{color:var(--gold2)} .diag-lbl.t3{color:var(--t3)}
+  .diag-prompt{font-size:clamp(13px,1.25vw,16px);font-weight:700;line-height:1.3;}
+  .diag-list{list-style:none;margin:0;padding:0;flex:1;min-height:0;overflow:auto;}
+  .diag-list li{display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;font-size:clamp(12px,1.15vw,14px);line-height:1.35;color:var(--ink);}
+  .diag-list .n{flex:none;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.12);font-size:11px;font-weight:900;display:grid;place-items:center;color:var(--ink-dim);}
+  .diag-cell.t1 .diag-list .n{color:var(--t1);border:1px solid rgba(126,217,154,.4)}
+  .diag-cell.t2 .diag-list .n{color:var(--gold2);border:1px solid rgba(240,200,80,.4)}
+  .diag-cell.t3 .diag-list .n{color:var(--t3);border:1px solid rgba(240,152,136,.4)}
+  .diag-ans{font-size:12px;color:var(--ink-faint);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
+  .practice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;}
+  .tier-col{border-radius:12px;padding:10px 12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);min-height:0;}
+  .tier-col.t1{border-color:rgba(126,217,154,.45)} .tier-col.t2{border-color:rgba(240,200,80,.45)} .tier-col.t3{border-color:rgba(240,152,136,.45)}
+  .tier-col h4{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+  .tier-col.t1 h4{color:var(--t1)} .tier-col.t2 h4{color:var(--gold2)} .tier-col.t3 h4{color:var(--t3)}
+  .tier-col ol{margin:0 0 0 16px;font-size:clamp(12px,1.2vw,14px);line-height:1.35;color:var(--ink-dim);}
+  .tier-col li{margin-bottom:5px;}
+  .word-section{border-radius:14px;padding:14px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);}
+  .word-section h4{color:var(--gold2);font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+  .word-list{display:grid;grid-template-columns:1fr;gap:8px;}
+  .word-item{display:flex;gap:10px;font-size:clamp(13px,1.25vw,15px);line-height:1.35;}
+  .word-item .n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#2a1808;font-weight:900;font-size:12px;display:grid;place-items:center;}
+  .steps-list{counter-reset:step;list-style:none;}
+  .steps-list li{counter-increment:step;display:flex;gap:12px;margin-bottom:10px;font-size:clamp(15px,1.5vw,18px);line-height:1.4;}
+  .steps-list li::before{content:counter(step);flex:none;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#2a1808;font-weight:900;display:grid;place-items:center;font-size:14px;}
+  /* Kid-facing slides (diagnostic, solution, concept, practice) — +4px text */
+  .slide.kid-slide h1.title{font-size:clamp(28px,3.4vw,44px);}
+  .slide.kid-slide .diag-list li{font-size:clamp(16px,1.35vw,18px);}
+  .slide.kid-slide .diag-list .n{width:24px;height:24px;font-size:15px;}
+  .slide.kid-slide .steps-list li{font-size:clamp(19px,1.65vw,22px);}
+  .slide.kid-slide .steps-list li::before{width:32px;height:32px;font-size:18px;}
+  .slide.kid-slide .card.cream p,.slide.kid-slide .card.cream li{font-size:clamp(18px,1.55vw,21px);}
+  .slide.kid-slide .card.cream h3{font-size:clamp(20px,2vw,24px);}
+  .slide.kid-slide .card.dark p{font-size:20px;}
+  .slide.kid-slide .notice{font-size:18px;}
+  .slide.kid-slide .tier-col ol{font-size:clamp(16px,1.35vw,18px);}
+  .slide.kid-slide .word-item{font-size:clamp(17px,1.4vw,19px);}
+  .slide.kid-slide .word-item .n{width:26px;height:26px;font-size:16px;}
+  .screenlbl{position:absolute;left:34px;bottom:16px;color:var(--ink-faint);font-size:11px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none;}
+  .corner{position:absolute;right:34px;bottom:16px;color:var(--ink-faint);font-size:11px;pointer-events:none;}
+  .corner kbd{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:2px 6px;pointer-events:none;}
+  /* Title slide hero + hook slide image */
+  .title-layout,.hook-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:16px;flex:1;min-height:0;margin-top:4px;}
+  .hook-layout{align-items:stretch;}
+  .hook-layout .hook-card{margin-top:0!important;min-height:0;}
+  .title-main{display:flex;flex-direction:column;min-height:0;min-width:0;}
+  .title-main .card.cream{flex:1;min-height:0;overflow:auto;}
+  .hero-frame{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);min-height:min(42vh,320px);}
+  .hero-frame.hook-img{min-height:min(36vh,280px);}
+  .hero-frame.hook-img img{min-height:min(36vh,280px);}
+  .hero-frame img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;min-height:min(42vh,320px);}
+  .hero-frame.diagram img,
+  .hero-frame img.svg-diagram{width:100%;height:min(42vh,320px);object-fit:contain;background:var(--bg0);display:block;}
+  .hero-frame.hook-img.diagram img,
+  .hero-frame.hook-img img.svg-diagram{height:min(36vh,280px);}
+  .hero-frame .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(38,32,56,.85));color:var(--gold2);font-size:12px;font-weight:700;padding:22px 12px 10px;letter-spacing:.04em;}
+  .hero-missing{display:grid;place-items:center;min-height:min(42vh,320px);padding:20px;text-align:center;color:var(--ink-faint);font-size:13px;line-height:1.45;}
+  .hero-missing code{font-size:11px;color:var(--gold2);word-break:break-all;}
+  .hero-frame.missing .cap{display:none;}
+  .hero-frame.missing::after{content:'Image not found — add file to images/';display:grid;place-items:center;position:absolute;inset:0;padding:20px;text-align:center;color:var(--ink-faint);font-size:13px;line-height:1.45;}
+  /* Term map */
+  .week-block{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;margin-bottom:10px;overflow:hidden;}
+  .week-head{padding:10px 14px;background:rgba(255,255,255,.07);font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold2);}
+  .lesson-pick{display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;padding:10px 14px;border-top:1px solid rgba(255,255,255,.08);cursor:pointer;}
+  .lesson-pick:hover{background:rgba(240,192,64,.1);}
+  .lesson-pick.off{opacity:.45;cursor:default;}
+  .lesson-pick.off:hover{background:transparent;}
+  .badge{font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px;text-transform:uppercase;}
+  .badge.ok{background:rgba(110,207,138,.2);color:var(--t1);}
+  .badge.wait{background:rgba(255,255,255,.06);color:var(--ink-faint);}
+  .badge.assess{background:rgba(240,192,64,.18);color:var(--gold2);}
+  .btn.assess{background:linear-gradient(135deg,var(--gold),var(--accent));color:#2a1808;border:none;font-weight:900;}
+  .btn.assess.open{border:2px solid var(--gold2);box-shadow:0 0 0 1px rgba(240,192,64,.35);}
+  /* Assessment slides */
+  .assess-meta{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px;}
+  .assess-meta span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:var(--ink-dim);}
+  .assess-list{margin:0 0 0 18px;line-height:1.5;font-size:clamp(14px,1.35vw,16px);}
+  .assess-list li{margin-bottom:6px;}
+  .assess-open-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0;}
+  .assess-open-row a.btn{text-decoration:none;display:inline-block;}
+  .assess-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:12px;}
+  .assess-preview img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff;}
+  .assess-doc-wrap{flex:1;min-height:0;display:flex;flex-direction:column;margin-top:8px;}
+  .assess-doc-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px;flex-shrink:0;}
+  .assess-doc-toolbar .hint{font-size:12px;color:var(--ink-faint);}
+  .assess-doc-content{flex:1;min-height:0;overflow:auto;background:#fff;color:#1e1a24;border-radius:14px;border:1px solid rgba(255,255,255,.15);padding:18px 22px;font-size:14px;line-height:1.5;}
+  .assess-doc-content.loading{display:grid;place-items:center;color:var(--ink-faint);background:rgba(255,255,255,.06);color:var(--ink-dim);min-height:200px;}
+  .assess-doc-content img{max-width:100%;height:auto;display:block;margin:8px 0;}
+  .assess-doc-content table{border-collapse:collapse;width:100%;margin:8px 0;}
+  .assess-doc-content td,.assess-doc-content th{border:1px solid #c8c0d0;padding:6px 8px;vertical-align:top;font-size:13px;}
+  .assess-doc-content h1,.assess-doc-content h2,.assess-doc-content h3{color:#1e1a24;margin:10px 0 6px;font-size:16px;}
+  .assess-doc-content p{margin:6px 0;}
+  .assess-doc-content ol,.assess-doc-content ul{margin:6px 0 6px 20px;}
+  .assess-doc-content a{color:#6a4a9a;}
+  .assess-panel .assess-doc-content{max-height:min(68vh,640px);}
+  .assess-doc-content.assess-pages{padding:12px 14px;}
+  .assess-session-note{background:#fff8ed;border-left:4px solid #e8a838;padding:8px 12px;margin:0 0 12px;font-weight:700;color:#3d2818;font-size:13px;}
+  .assess-page{margin:0 0 14px;}
+  .assess-page:last-child{margin-bottom:0;}
+  .assess-page img{width:100%;height:auto;display:block;border-radius:8px;border:1px solid #d8d0e0;background:#fff;}
+  .assess-page figcaption{font-size:11px;color:#6a6284;margin-top:5px;text-align:center;}
+  .materials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:10px;}
+  .materials-grid span{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--ink-dim);}
+  /* Assessment overlay */
+  #assessOverlay{position:fixed;inset:0;background:rgba(30,24,48,.72);backdrop-filter:blur(8px);z-index:70;display:none;align-items:center;justify-content:center;padding:20px;}
+  #assessOverlay.open{display:flex;}
+  .assess-panel{width:min(960px,100%);max-height:min(92vh,900px);background:var(--bg1);border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:0 24px 60px rgba(12,8,24,.4);display:flex;flex-direction:column;overflow:hidden;}
+  .assess-panel header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);}
+  .assess-panel header b{color:var(--gold2);font-size:16px;}
+  .assess-panel .body{padding:18px;overflow:auto;flex:1;font-size:14.5px;line-height:1.55;color:var(--ink-dim);}
+  .assess-panel .body h3{color:var(--ink);margin:0 0 8px;font-size:18px;}
+  .assess-panel .body h4{color:var(--gold2);margin:14px 0 6px;font-size:14px;}
+  .assess-panel .body ul{margin:6px 0 6px 18px;}
+  .assess-panel .body a{color:var(--gold2);font-weight:700;}
+  .assess-panel .preview-scroll img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff;}
+  /* Nav */
+  #nav{display:flex;justify-content:center;padding:8px 12px;border-top:1px solid rgba(255,255,255,.08);background:var(--bg0);flex-shrink:0;}
+  .nav-inner{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;max-width:100%;}
+  .nav-pager{display:inline-flex;align-items:stretch;gap:6px;flex-shrink:0;}
+  .nav-pager .btn{width:7.4rem;padding-left:8px;padding-right:8px;text-align:center;white-space:nowrap;}
+  .btn{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;}
+  .btn:hover{border-color:var(--gold);background:rgba(255,255,255,.12);color:#fff;}
+  .btn.primary{background:linear-gradient(135deg,var(--gold),var(--accent));color:#2a1808;border:none;}
+  .btn.notes-open{border-color:var(--gold);box-shadow:0 0 0 1px rgba(240,192,64,.35);}
+  #counter{font-weight:800;color:var(--ink-dim);width:14.5rem;text-align:center;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums;flex-shrink:0;}
+  select#jump{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 10px;font-size:12px;width:10.5rem;max-width:10.5rem;}
+  #tnotes{position:fixed;right:0;top:0;height:100%;width:min(420px,92vw);transform:translateX(100%);transition:transform .28s ease;background:var(--bg1);border-left:1px solid rgba(255,255,255,.1);z-index:40;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(12,8,24,.35);}
+  #tnotes.open{transform:none;}
+  #tnotes header{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  #tnotes header b{color:var(--gold2);}
+  #tnotes .body{padding:18px;overflow:auto;flex:1;font-size:14.5px;line-height:1.55;color:var(--ink-dim);}
+  #tnotes .body h4{color:var(--gold2);margin:12px 0 6px;font-size:15px;}
+  #tnotes .body ul{margin:6px 0 6px 18px;}
+  /* Present mode */
+  html.presenting body,html:fullscreen body{background:var(--bg1);}
+  html.presenting #app,html:fullscreen #app{height:100dvh;width:100vw;}
+  html.presenting #nav,html:fullscreen #nav{padding:6px 8px;}
+  html.presenting #stageWrap,html:fullscreen #stageWrap{padding:0;flex:1;min-height:0;width:100%;}
+  html.presenting .slide,html:fullscreen .slide{width:1180px;height:738px;max-width:none;max-height:none;aspect-ratio:auto;border-radius:0;border:none;box-shadow:none;transform-origin:center center;}
+  html.presenting .corner,html.presenting .screenlbl,html:fullscreen .corner,html:fullscreen .screenlbl{display:none;}
+  html.presenting #tnotes,html:fullscreen #tnotes{z-index:100;height:100dvh;}
+  html.presenting .diag-grid,html:fullscreen .diag-grid{flex:1;}
+  html.presenting .practice-grid,html:fullscreen .practice-grid{flex:0 0 auto;}
+  @media(max-width:800px){
+    .diag-grid,.practice-grid{grid-template-columns:1fr;}
+    .title-layout,.hook-layout{grid-template-columns:1fr;}
+    .hero-frame{min-height:200px;}
+    .hero-frame img{min-height:200px;}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stageWrap"><div class="slide" id="slide"></div></div>
+  <nav id="nav">
+    <div class="nav-inner">
+      <button class="btn" id="mapBtn" type="button">🗺 Term map</button>
+      <select id="jump" aria-label="Jump to slide"></select>
+      <span id="counter">—</span>
+      <div class="nav-pager">
+        <button class="btn" id="prev" type="button">← Prev</button>
+        <button class="btn primary" id="next" type="button">Next →</button>
+      </div>
+      <button class="btn" id="notesBtn" type="button">Teacher notes</button>
+      <button class="btn assess" id="assessBtn" type="button" style="display:none" title="A">📋 Task</button>
+      <button class="btn" id="presentBtn" type="button" title="F">⛶ Present</button>
+    </div>
+  </nav>
+</div>
+<aside id="tnotes">
+  <header><b>Teacher notes</b><button class="btn" id="notesClose" type="button">✕</button></header>
+  <div class="body" id="tnotesBody"></div>
+</aside>
+<div id="assessOverlay" role="dialog" aria-modal="true" aria-label="Assessment task">
+  <div class="assess-panel">
+    <header><b id="assessPanelTitle">Assessment task</b><button class="btn" id="assessClose" type="button">✕</button></header>
+    <div class="body" id="assessPanelBody"></div>
+  </div>
+</div>
+<script src="lessons.js?v=6"></script>
+<script src="assessments.js?v=5"></script>
+<script>
+const PHASES = ['title','diagnostic','hook','solution','concept','practice'];
+const PHASE_LABELS = { title:'Title', diagnostic:'Diagnostic', hook:'Hook', solution:'Solution', concept:'Concept', practice:'Practice' };
+const ASSESS_PHASES = ['title','brief','task'];
+const ASSESS_PHASE_LABELS = { title:'Overview', brief:'This session', task:'Official task' };
+
+let mode = 'map'; // map | lesson
+let lessonId = null;
+let slideIdx = 0;
+
+function esc(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function getLesson(id){ return LESSONS.find(l=>l.id===id); }
+function lessonReady(l){ return l && (l.ready || l.type==='assessment'); }
+function isAssessmentLesson(l){ return l && l.type==='assessment'; }
+function currentPhases(l){ return isAssessmentLesson(l) ? ASSESS_PHASES : PHASES; }
+function currentPhaseLabels(l){ return isAssessmentLesson(l) ? ASSESS_PHASE_LABELS : PHASE_LABELS; }
+function getAssessCtx(lessonId){
+  const l = getLesson(lessonId);
+  if(!l?.assessmentId) return getAssessSession(lessonId);
+  const assess = getAssessment(l.assessmentId);
+  const session = assess?.sessions?.[lessonId];
+  return assess && session ? { assess, session } : null;
+}
+
+function ansStr(q){
+  const a = q?.answer ?? q;
+  return Array.isArray(a) ? a[0] : a;
+}
+
+function diagTiers(l){
+  const d = l.diagnostic;
+  if(!d) return [[],[],[]];
+  if(Array.isArray(d)) return [1,2,3].map(i => d[i-1] ? [d[i-1]] : []);
+  return [1,2,3].map(t => d[t] || []);
+}
+
+function imageBlock(img, extraClass, fallbackSrc){
+  if(!img?.src) return '';
+  const src = img.src;
+  const alt = esc(img.alt || '');
+  const cap = img.caption ? `<div class="cap">${esc(img.caption)}</div>` : '';
+  const isDiagram = img.diagram || /\.svg$/i.test(src);
+  const diagram = isDiagram ? ' diagram' : '';
+  const cls = extraClass ? ` ${extraClass}` : '';
+  const fb = fallbackSrc ? esc(fallbackSrc) : '';
+  const imgCls = isDiagram ? ' class="svg-diagram"' : '';
+  return `<div class="hero-frame${diagram}${cls}" data-img="${esc(src)}">
+    <img src="${esc(src)}" alt="${alt}"${imgCls} loading="eager" decoding="async"${fb ? ` data-fallback="${fb}"` : ''} onerror="if(this.dataset.fallback&&!this.dataset.tried){this.dataset.tried=1;this.src=this.dataset.fallback;return;}this.closest('.hero-frame').classList.add('missing');this.remove();">
+    ${cap}
+  </div>`;
+}
+
+function heroBlock(l){
+  return imageBlock(l.hero);
+}
+
+function hookImageBlock(l){
+  const h = l.hook;
+  if(!h) return '';
+  const img = h.image || {
+    src: `images/hooks/${l.id}-hook.jpg`,
+    alt: h.title || l.title,
+    caption: h.title,
+    diagram: l.hero?.diagram
+  };
+  return imageBlock(img, 'hook-img', l.hero?.src);
+}
+
+/* ---------- Term map ---------- */
+function renderMap(){
+  mode = 'map';
+  lessonId = null;
+  slideIdx = 0;
+  closeAssessOverlay();
+  const el = document.getElementById('slide');
+  el.className = 'slide map-slide';
+  const weeks = {};
+  LESSONS.forEach(l=>{
+    if(!weeks[l.week]) weeks[l.week]=[];
+    weeks[l.week].push(l);
+  });
+  let html = `<span class="eyebrow">Teacher presentation · Term 3</span>
+    <h1 class="title">Maths Heads — pick a lesson</h1>
+    <p class="sub">~45 min teaching block per lesson (70 min period incl. homework check &amp; routines). Present with <kbd>F</kbd>.</p>
+    <div class="body-scroll">`;
+  for(let w=1;w<=10;w++){
+    if(!weeks[w]) continue;
+    html += `<div class="week-block"><div class="week-head">Week ${w}</div>`;
+    weeks[w].forEach(l=>{
+      const ok = lessonReady(l);
+      const assess = isAssessmentLesson(l);
+      const badge = assess ? 'assess' : (ok ? 'ok' : 'wait');
+      const badgeTxt = assess ? 'Assess' : (ok ? 'Ready' : 'Soon');
+      html += `<div class="lesson-pick${ok?'':' off'}" data-id="${l.id}" role="button" tabindex="0">
+        <span style="color:var(--ink-faint);font-weight:800">L${l.lesson}</span>
+        <div><b style="font-size:14px">${esc(l.title)}</b><br><small style="color:var(--ink-dim)">${esc(l.code||'')}</small></div>
+        <span class="badge ${badge}">${badgeTxt}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+  html += `</div>`;
+  el.innerHTML = html;
+  el.querySelector('.body-scroll')?.addEventListener('click', e=>{
+    const row = e.target.closest('.lesson-pick:not(.off)');
+    if(row?.dataset.id) openLesson(row.dataset.id);
+  });
+  updateNav();
+  fillNotes(null, null);
+}
+
+function openLesson(id, startSlide){
+  const l = getLesson(id);
+  if(!lessonReady(l)) return;
+  closeAssessOverlay();
+  mode = 'lesson';
+  lessonId = id;
+  slideIdx = startSlide ?? 0;
+  if(isAssessmentLesson(l) && l.assessmentId){
+    const a = getAssessment(l.assessmentId);
+    if(a?.display !== 'pages') fetchAssessHtml(l.assessmentId).catch(()=>{});
+  }
+  renderSlide();
+}
+
+function readyLessons(){
+  return LESSONS.filter(lessonReady);
+}
+
+function adjacentLesson(delta){
+  const list = readyLessons();
+  const i = list.findIndex(l => l.id === lessonId);
+  if(i < 0) return null;
+  return list[i + delta] || null;
+}
+
+function navPrev(){
+  if(mode !== 'lesson') return;
+  const l = getLesson(lessonId);
+  if(slideIdx > 0) show(slideIdx - 1);
+  else {
+    const prev = adjacentLesson(-1);
+    if(prev) openLesson(prev.id, currentPhases(prev).length - 1);
+  }
+}
+
+function navNext(){
+  if(mode !== 'lesson') return;
+  const l = getLesson(lessonId);
+  const phases = currentPhases(l);
+  if(slideIdx < phases.length - 1) show(slideIdx + 1);
+  else {
+    const next = adjacentLesson(1);
+    if(next) openLesson(next.id, 0);
+  }
+}
+
+/* ---------- Lesson slides ---------- */
+function goToAssessTask(){
+  if(mode!=='lesson') return;
+  const l = getLesson(lessonId);
+  if(!isAssessmentLesson(l)) return;
+  const phases = currentPhases(l);
+  const taskIdx = phases.indexOf('task');
+  if(taskIdx >= 0) show(taskIdx);
+}
+
+function toggleAssessTask(){
+  if(mode!=='lesson') return;
+  const l = getLesson(lessonId);
+  if(!isAssessmentLesson(l)) return;
+  const phases = currentPhases(l);
+  const taskIdx = phases.indexOf('task');
+  if(slideIdx !== taskIdx && taskIdx >= 0){ show(taskIdx); return; }
+  if(document.getElementById('assessOverlay').classList.contains('open')) closeAssessOverlay();
+  else openAssessOverlay();
+}
+
+function assessOpenLink(file){
+  return `<a class="btn assess" href="${esc(file)}" target="_blank" rel="noopener">↗ Open Word file</a>`;
+}
+
+function mountAssessDoc(assessId, el, sessionLabel, lessonId){
+  if(!el || !assessId) return;
+  const assess = getAssessment(assessId);
+  if(!assess) return;
+
+  if(assess.display === 'pages' && assess.pages?.length){
+    const pages = getAssessPages(assess, lessonId, false);
+    el.className = 'assess-doc-content assess-pages';
+    let html = '';
+    if(sessionLabel){
+      html += `<p class="assess-session-note">This session: ${esc(sessionLabel)}</p>`;
+    }
+    html += pages.map(p=>`
+      <figure class="assess-page">
+        <img src="${esc(p.src)}" alt="${esc(p.label)}" loading="eager" onerror="this.alt='Missing: ${esc(p.src)}';this.style.minHeight='120px';this.style.background='#f0e8f8';">
+        <figcaption>${esc(p.label)}</figcaption>
+      </figure>`).join('');
+    el.innerHTML = html || '<p>No pages for this session.</p>';
+    return;
+  }
+
+  el.className = 'assess-doc-content loading';
+  el.textContent = 'Loading assessment…';
+  fetchAssessHtml(assessId).then(html=>{
+    el.className = 'assess-doc-content';
+    el.innerHTML = html;
+    if(sessionLabel){
+      const note = document.createElement('p');
+      note.className = 'assess-session-note';
+      note.textContent = 'This session: ' + sessionLabel;
+      el.insertBefore(note, el.firstChild);
+    }
+  }).catch(()=>{
+    el.className = 'assess-doc-content loading';
+    el.textContent = 'Could not load assessment — open the Word file instead.';
+  });
+}
+
+function renderAssessSlide(l, phase, el){
+  const ctx = getAssessCtx(l.id);
+  const assess = ctx?.assess;
+  const session = ctx?.session;
+  const labels = ASSESS_PHASE_LABELS;
+  let html = '';
+
+  if(phase==='title'){
+    const hero = heroBlock(l);
+    html = `<span class="eyebrow">Week ${l.week} · ${esc(assess?.code||l.code||'Assessment')}</span>
+      <div class="title-layout">
+        ${hero || `<div class="hero-frame"><div class="hero-missing">Assessment</div></div>`}
+        <div class="title-main">
+          <h1 class="title">${esc(assess?.title || l.title)}</h1>
+          <p class="sub">${esc(assess?.unit||'')} · ${esc(session?.label||l.subtitle||'')}</p>
+          <div class="assess-meta">
+            <span>${esc(session?.label||'Session')}</span>
+            <span>~${session?.minutes||45} min</span>
+            <span>${esc(assess?.technique||'')}</span>
+          </div>
+          <div class="card cream" style="margin-top:8px;flex:1;overflow:auto">
+            <h3>${esc(session?.focus||'Assessment session')}</h3>
+            <p style="margin-top:8px;font-size:14px;line-height:1.45;color:var(--cream-ink)">Use <b>Next</b> for session plan, then <b>View task pages</b> below — or press <b>📋 Task</b> in the nav bar.</p>
+            <button class="btn assess" type="button" style="margin-top:12px" onclick="goToAssessTask()">View task pages →</button>
+          </div>
+        </div>
+      </div>`;
+  }
+  else if(phase==='brief'){
+    const hero = heroBlock(l);
+    html = `<span class="eyebrow">${esc(session?.label||'Session')} · plan</span>
+      <div class="title-layout">
+        ${hero || ''}
+        <div class="title-main">
+          <h1 class="title">${esc(session?.focus||'This session')}</h1>
+          <p class="sub">${esc(assess?.technique||'')} — ${esc(assess?.code||'')} · ~${session?.minutes||45} min teaching block</p>
+          <div class="body-scroll" style="flex:1;min-height:0">
+            <div class="card cream">
+              <h3>Focus for this session</h3>
+              <ol class="assess-list">${(session?.items||[]).map(it=>`<li>${it}</li>`).join('')}</ol>
+            </div>
+            ${assess?.conditions?.length?`<div class="card dark" style="margin-top:10px"><h3>Conditions</h3><ul class="assess-list">${assess.conditions.map(c=>`<li>${c}</li>`).join('')}</ul></div>`:''}
+            ${assess?.materials?.length?`<div class="card dark" style="margin-top:10px"><h3>Materials needed</h3><div class="materials-grid">${assess.materials.map(m=>`<span>${esc(m)}</span>`).join('')}</div></div>`:''}
+            <button class="btn assess" type="button" style="margin-top:12px" onclick="goToAssessTask()">View task pages →</button>
+          </div>
+        </div>
+      </div>`;
+  }
+  else if(phase==='task'){
+    html = `<span class="eyebrow">Official task</span>
+      <h1 class="title">${esc(assess?.code||'SA')} · ${esc(assess?.title||l.title)}</h1>
+      <p class="sub">${esc(session?.label||'')} — full task from <b>${esc(assess?.file||'')}</b></p>
+      <div class="assess-doc-wrap">
+        <div class="assess-doc-toolbar">
+          ${assess?.file ? assessOpenLink(assess.file) : ''}
+          <span class="hint">Scroll to view all questions · print from Word if needed</span>
+        </div>
+        <div class="assess-doc-content loading" id="assessDocSlide">Loading assessment…</div>
+      </div>`;
+  }
+
+  html += `<div class="screenlbl">Week ${l.week} · L${l.lesson} · ${labels[phase]}</div>
+    <div class="corner"><kbd>T</kbd> notes · <kbd>A</kbd> task · <kbd>F</kbd> present</div>`;
+  el.innerHTML = html;
+  if(phase==='task' && assess?.id){
+    mountAssessDoc(assess.id, document.getElementById('assessDocSlide'), session?.focus, l.id);
+  }
+}
+
+function renderSlide(){
+  const l = getLesson(lessonId);
+  const phases = currentPhases(l);
+  const phase = phases[slideIdx];
+  const phaseLabels = currentPhaseLabels(l);
+  const el = document.getElementById('slide');
+  const kidSlide = ['diagnostic','solution','concept','practice'].includes(phase);
+  el.className = kidSlide ? 'slide kid-slide' : 'slide';
+
+  if(isAssessmentLesson(l)){
+    renderAssessSlide(l, phase, el);
+    updateNav();
+    fillNotes(l, phase);
+    return;
+  }
+
+  let html = '';
+  const pacing = (l.pacing||[]).map(p=>`<span>${PHASE_LABELS[p.phase]||p.phase} ~${p.min}m</span>`).join('');
+
+  if(phase==='title'){
+    const hero = heroBlock(l);
+    html = `<span class="eyebrow">Week ${l.week} · Lesson ${l.lesson} · ${esc(l.code||'')}</span>
+      <div class="title-layout">
+        ${hero || `<div class="hero-frame"><div class="hero-missing">Add <code>hero</code> in lessons.js<br>See IMAGE-SHOPPING-LIST.md</div></div>`}
+        <div class="title-main">
+          <h1 class="title">${esc(l.title)}</h1>
+          <p class="sub">${esc(l.subtitle||'')} ${l.focus?('· '+esc(l.focus)):''}</p>
+          <div class="timing">${pacing}</div>
+          <div class="card cream" style="margin-top:8px">
+            <h3>Lesson flow (~45 min teaching)</h3>
+            <ol style="margin:10px 0 0 20px;line-height:1.6;font-size:15px;color:var(--cream-ink)">
+              <li><b>Diagnostic</b> — 5 problems per tier (15 total); place students by band</li>
+              <li><b>Hook</b> — engaging real-life problem</li>
+              <li><b>Solution</b> — work through the hook together</li>
+              <li><b>Concept</b> — teach the maths</li>
+              <li><b>Practice</b> — 3 tiers + 3 word problems (same screen)</li>
+            </ol>
+          </div>
+        </div>
+      </div>`;
+  }
+  else if(phase==='diagnostic'){
+    const labels = ['Tier 1','Tier 2','Tier 3'];
+    const cls = ['t1','t2','t3'];
+    const tiers = diagTiers(l);
+    html = `<span class="eyebrow">Diagnostic · observe &amp; place</span>
+      <h1 class="title">${esc(l.title)}</h1>
+      <p class="sub">Students work through each tier column on paper — <b>5 problems per tier</b>. They do not need to finish every column. Circulate and note the highest tier where they score <b>3+</b>.</p>
+      <div class="diag-grid">${tiers.map((items,i)=>`
+        <div class="diag-cell ${cls[i]}">
+          <div class="diag-lbl ${cls[i]}">${labels[i]} · ${items.length} problems</div>
+          <ol class="diag-list">${items.map((d,j)=>`<li><span class="n">${j+1}</span><span>${d.prompt}</span></li>`).join('')}</ol>
+        </div>`).join('')}</div>`;
+  }
+  else if(phase==='hook'){
+    const hookImg = hookImageBlock(l);
+    html = `<span class="eyebrow">Hook · real life</span>
+      <h1 class="title">${esc(l.hook.title||'Think about this…')}</h1>
+      <div class="hook-layout">
+        ${hookImg || `<div class="hero-frame hook-img missing"></div>`}
+        <div class="card hook-card" style="flex:1;display:flex;flex-direction:column;justify-content:center">
+          <p style="color:var(--ink-dim);font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">🌍 Engaging problem</p>
+          <div class="hook-q">${l.hook.problem}</div>
+          ${l.hook.context?`<p style="color:var(--ink-dim);margin-top:12px;font-size:15px;line-height:1.45">${l.hook.context}</p>`:''}
+        </div>
+      </div>
+      <p class="sub" style="margin-top:10px">Give think time. Discuss strategies before revealing the solution.</p>`;
+  }
+  else if(phase==='solution'){
+    const s = l.hookSolution;
+    html = `<span class="eyebrow">Work through the hook</span>
+      <h1 class="title">${esc(s.heading)}</h1>
+      <div class="body-scroll">
+        <div class="card cream">
+          <ol class="steps-list">${s.steps.map(st=>`<li>${st}</li>`).join('')}</ol>
+          ${s.answer?`<div class="notice"><b>Answer:</b> ${esc(s.answer)}</div>`:''}
+        </div>
+      </div>`;
+  }
+  else if(phase==='concept'){
+    const c = l.concept;
+    html = `<span class="eyebrow">Teach the concept</span>
+      <h1 class="title">${esc(c.heading)}</h1>
+      <div class="body-scroll">
+        <div class="card cream">
+          ${c.body.map(p=>`<p style="margin-bottom:8px">${p}</p>`).join('')}
+          ${c.notice?`<div class="notice"><b>Notice:</b> ${esc(c.notice)}</div>`:''}
+        </div>
+        ${c.example?`<div class="card dark" style="margin-top:10px"><h3>Worked example</h3><p style="margin-top:8px;line-height:1.45">${c.example}</p></div>`:''}
+      </div>`;
+  }
+  else if(phase==='practice'){
+    const tiers = [['t1','Tier 1'],['t2','Tier 2'],['t3','Tier 3']];
+    html = `<span class="eyebrow">Differentiated practice</span>
+      <h1 class="title">Practice + word problems</h1>
+      <p class="sub">Assign by diagnostic band. Everyone attempts the <b>3 real-life problems</b> at the end.</p>
+      <div class="body-scroll">
+        <div class="practice-grid">${tiers.map(([cls,lbl],ti)=>{
+          const qs = l.practice[ti+1]||[];
+          return `<div class="tier-col ${cls}"><h4>${lbl}</h4><ol>${qs.map(q=>`<li>${q.prompt}</li>`).join('')}</ol></div>`;
+        }).join('')}</div>
+        <div class="word-section">
+          <h4>🌍 Real-life word problems (all students)</h4>
+          <div class="word-list">${(l.wordProblems||[]).map((w,i)=>`
+            <div class="word-item"><span class="n">${i+1}</span><span>${w.prompt}</span></div>`).join('')}</div>
+        </div>
+      </div>`;
+  }
+
+  html += `<div class="screenlbl">Week ${l.week} · L${l.lesson} · ${phaseLabels[phase]}</div>
+    <div class="corner"><kbd>←</kbd><kbd>→</kbd> slides · crosses lessons · <kbd>T</kbd> notes · <kbd>F</kbd> present</div>`;
+  el.innerHTML = html;
+  updateNav();
+  fillNotes(l, phase);
+}
+
+function updateNav(){
+  const counter = document.getElementById('counter');
+  const jump = document.getElementById('jump');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const assessBtn = document.getElementById('assessBtn');
+  if(mode==='map'){
+    counter.textContent = 'Term map';
+    jump.innerHTML = '<option value="">—</option>';
+    jump.disabled = true;
+    prev.disabled = true;
+    next.disabled = true;
+    assessBtn.style.display = 'none';
+    return;
+  }
+  const l = getLesson(lessonId);
+  const phases = currentPhases(l);
+  const labels = currentPhaseLabels(l);
+  const isAssess = isAssessmentLesson(l);
+  assessBtn.style.display = isAssess ? '' : 'none';
+  assessBtn.classList.toggle('open', document.getElementById('assessOverlay').classList.contains('open'));
+  jump.disabled = false;
+  const prevL = adjacentLesson(-1);
+  const nextL = adjacentLesson(1);
+  prev.disabled = slideIdx <= 0 && !prevL;
+  next.disabled = slideIdx >= phases.length - 1 && !nextL;
+  prev.textContent = (slideIdx <= 0 && prevL) ? '← Prev lesson' : '← Prev';
+  next.textContent = (slideIdx >= phases.length - 1 && nextL) ? 'Next lesson →' : 'Next →';
+  counter.textContent = `W${l.week} L${l.lesson} · ${slideIdx+1}/${phases.length} · ${labels[phases[slideIdx]]}`;
+  jump.innerHTML = phases.map((p,i)=>`<option value="${i}"${i===slideIdx?' selected':''}>${i+1}. ${labels[p]}</option>`).join('');
+  updatePresentScale();
+}
+
+function fillNotes(l, phase){
+  const body = document.getElementById('tnotesBody');
+  if(!l){ body.innerHTML = '<p>Select a lesson from the term map. Use <b>Present</b> when screen-sharing.</p><p>Assessment lessons (Weeks 3 &amp; 7) open the official <b>.docx</b> tasks.</p>'; return; }
+  const labels = currentPhaseLabels(l);
+  let html = `<p><b>${esc(l.title)}</b> · ${labels[phase]||phase}</p>`;
+
+  if(isAssessmentLesson(l)){
+    const ctx = getAssessCtx(l.id);
+    const assess = ctx?.assess;
+    const session = ctx?.session;
+    if(session?.notes) html += session.notes;
+    else html += '<p>Session notes — see assessments.js</p>';
+    if(assess?.pages?.length){
+      const guide = assess.pages.find(p=>p.teacherOnly);
+      if(guide) html += `<h4>Marking guide</h4><img src="${esc(guide.src)}" alt="${esc(guide.label)}" style="width:100%;border-radius:10px;border:1px solid var(--line)">`;
+    }
+    if(phase==='task' && assess?.file){
+      html += `<h4>Official file</h4><p><a href="${esc(assess.file)}">${esc(assess.file)}</a></p>`;
+      if(assess.conditions?.length) html += `<h4>Conditions</h4><ul>${assess.conditions.map(c=>`<li>${c}</li>`).join('')}</ul>`;
+    }
+    body.innerHTML = html;
+    return;
+  }
+
+  const n = l.notes && l.notes[phase];
+  if(n) html += n;
+  else html += '<p>No notes for this slide yet.</p>';
+  if(phase==='diagnostic' && l.notes?.placement){
+    html += `<h4>Placement guide</h4>${l.notes.placement}`;
+    const tiers = diagTiers(l);
+    html += `<h4>Diagnostic answers</h4>`;
+    tiers.forEach((items, i) => {
+      html += `<p><b>Tier ${i+1}</b></p><ol>${items.map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ol>`;
+    });
+  }
+  if(phase==='practice'){
+    html += `<h4>Answers · Tier 1</h4><ul>${(l.practice[1]||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
+    html += `<h4>Answers · Tier 2</h4><ul>${(l.practice[2]||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
+    html += `<h4>Answers · Tier 3</h4><ul>${(l.practice[3]||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
+    html += `<h4>Word problems</h4><ul>${(l.wordProblems||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
+  }
+  body.innerHTML = html;
+}
+
+function show(i){
+  if(mode!=='lesson') return;
+  const l = getLesson(lessonId);
+  const phases = currentPhases(l);
+  slideIdx = Math.max(0, Math.min(phases.length-1, i));
+  renderSlide();
+}
+
+function openAssessOverlay(){
+  const l = getLesson(lessonId);
+  const ctx = getAssessCtx(l?.id);
+  if(!ctx) return;
+  const { assess, session } = ctx;
+  document.getElementById('assessPanelTitle').textContent = `${assess.code} — ${session.label}`;
+  document.getElementById('assessPanelBody').innerHTML = `
+    <p><b>${esc(session.label)}</b> — ${esc(session.focus)}</p>
+    <p>${assessOpenLink(assess.file)}</p>
+    <div class="assess-doc-content loading" id="assessDocPanel">Loading assessment…</div>`;
+  document.getElementById('assessOverlay').classList.add('open');
+  mountAssessDoc(assess.id, document.getElementById('assessDocPanel'), session.focus, l?.id);
+  updateNav();
+}
+function closeAssessOverlay(){
+  document.getElementById('assessOverlay').classList.remove('open');
+  updateNav();
+}
+
+function isPresenting(){ return document.documentElement.classList.contains('presenting'); }
+function setPresenting(on){
+  document.documentElement.classList.toggle('presenting', on);
+  updatePresentScale();
+}
+async function enterPresent(){
+  setPresenting(true);
+  try{
+    const root = document.documentElement;
+    if(!document.fullscreenElement){
+      if(root.requestFullscreen) await root.requestFullscreen();
+      else if(root.webkitRequestFullscreen) root.webkitRequestFullscreen();
+    }
+  }catch(_){}
+  updatePresentScale();
+}
+function exitPresent(){
+  setPresenting(false);
+  const slide = document.getElementById('slide');
+  if(slide) slide.style.transform = '';
+  if(document.fullscreenElement){
+    if(document.exitFullscreen) document.exitFullscreen();
+    else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }
+}
+function togglePresent(){
+  if(document.fullscreenElement || isPresenting()) exitPresent();
+  else enterPresent();
+}
+function updatePresentScale(){
+  const slide = document.getElementById('slide');
+  const wrap = document.getElementById('stageWrap');
+  if(!slide || !wrap) return;
+  slide.style.transform = '';
+  if(!isPresenting() && !document.fullscreenElement) return;
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  const scale = Math.min(w/1180, h/738);
+  slide.style.transform = `scale(${scale})`;
+}
+function openNotes(){
+  document.getElementById('tnotes').classList.add('open');
+  document.getElementById('notesBtn').classList.add('notes-open');
+}
+function closeNotes(){
+  document.getElementById('tnotes').classList.remove('open');
+  document.getElementById('notesBtn').classList.remove('notes-open');
+}
+
+document.getElementById('prev').onclick = navPrev;
+document.getElementById('next').onclick = navNext;
+document.getElementById('mapBtn').onclick = renderMap;
+document.getElementById('jump').onchange = e=> show(+e.target.value);
+document.getElementById('notesBtn').onclick = ()=>{
+  if(document.getElementById('tnotes').classList.contains('open')) closeNotes();
+  else openNotes();
+};
+document.getElementById('notesClose').onclick = closeNotes;
+document.getElementById('presentBtn').onclick = togglePresent;
+document.getElementById('assessBtn').onclick = toggleAssessTask;
+document.getElementById('assessClose').onclick = closeAssessOverlay;
+document.getElementById('assessOverlay').onclick = e=>{ if(e.target.id==='assessOverlay') closeAssessOverlay(); };
+window.addEventListener('resize', updatePresentScale);
+document.addEventListener('fullscreenchange', ()=>{
+  if(!document.fullscreenElement && isPresenting()) setPresenting(false);
+  updatePresentScale();
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){ closeAssessOverlay(); closeNotes(); exitPresent(); return; }
+  if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='TEXTAREA') return;
+  if(e.key==='f'||e.key==='F'){ e.preventDefault(); togglePresent(); return; }
+  if(e.key==='t'||e.key==='T'){ e.preventDefault(); document.getElementById('notesBtn').click(); return; }
+  if(e.key==='a'||e.key==='A'){
+    const l = getLesson(lessonId);
+    if(mode==='lesson' && isAssessmentLesson(l)){ e.preventDefault(); toggleAssessTask(); return; }
+  }
+  if(mode!=='lesson') return;
+  if(e.key==='ArrowRight'||e.key===' '){ e.preventDefault(); navNext(); return; }
+  if(e.key==='ArrowLeft'){ e.preventDefault(); navPrev(); return; }
+});
+
+renderMap();
+</script>
+</body>
+</html>

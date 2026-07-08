@@ -1,0 +1,23 @@
+{
+  "heroes": [
+    { "file": "w2-l3-place-value-thousandths.jpg", "query": "digital stopwatch timer display sports", "diagram": false, "pick": 0 },
+    { "file": "w2-l1-equivalent-fractions.jpg", "query": "fraction bars strips math classroom colorful", "diagram": false, "pick": 1 },
+    { "file": "w1-l3-fun-run.jpg", "query": "primary school cross country boys running track", "diagram": false, "pick": 0 },
+    { "file": "w3-l2-decimals-fractions-revision.jpg", "query": "teacher math chalkboard primary school bright classroom", "diagram": false, "pick": 0 },
+    { "file": "w4-l1-multiplication-split.jpg", "query": "split strategy multiplication whiteboard teaching", "diagram": true, "pick": 1 },
+    { "file": "w5-l1-3x2-multiplication.jpg", "query": "shipping containers warehouse logistics rows", "diagram": false, "pick": 2 },
+    { "file": "w6-l3-multiplication-division-revision.jpg", "query": "multiplication division problems chalkboard math", "diagram": false, "pick": 1 },
+    { "file": "w7-l4-sa6-reflection.jpg", "query": "water usage household bar chart infographic", "diagram": true, "pick": 2 },
+    { "file": "w8-l1-line-graph.jpg", "query": "weekly temperature line graph chart paper", "diagram": true, "pick": 3 }
+  ],
+  "hooks": [
+    { "id": "w2-l3", "file": "w2-l3-hook.jpg", "query": "digital stopwatch hand timing athletics track", "diagram": false, "pick": 1 },
+    { "id": "w2-l1", "file": "w2-l1-hook.jpg", "query": "pizza cut eight slices half comparison top view", "diagram": false, "pick": 2 },
+    { "id": "w1-l2", "file": "w1-l2-hook.jpg", "query": "pancake stack syrup breakfast plate kitchen", "diagram": false, "pick": 2 },
+    { "id": "w1-l3", "file": "w1-l3-hook.jpg", "query": "fun run starting line kids race school event", "diagram": false, "pick": 1 },
+    { "id": "w2-l2", "file": "w2-l2-hook.jpg", "query": "two cup measuring jug milk recipe kitchen", "diagram": false, "pick": 0 },
+    { "id": "w3-l2", "file": "w3-l2-hook.jpg", "query": "wooden ruler on paper close up school", "diagram": false, "pick": 0 },
+    { "id": "w5-l1", "file": "w5-l1-hook.jpg", "query": "forklift loading pallet warehouse boxes", "diagram": false, "pick": 1 },
+    { "id": "w6-l3", "file": "w6-l3-hook.jpg", "query": "classroom maths game buzz relay students", "diagram": false, "pick": 2 }
+  ]
+}
