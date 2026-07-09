@@ -467,11 +467,6 @@ function renderAssessSlide(l, phase, el){
         <div class="title-main">
           <h1 class="title">${esc(assess?.title || l.title)}</h1>
           <p class="sub">${esc(assess?.unit||'')} · ${esc(session?.label||l.subtitle||'')}</p>
-          <div class="assess-meta">
-            <span>${esc(session?.label||'Session')}</span>
-            <span>~${session?.minutes||45} min</span>
-            <span>${esc(assess?.technique||'')}</span>
-          </div>
           <div class="card cream" style="margin-top:8px;flex:1;overflow:auto">
             <h3>${esc(session?.focus||'Assessment session')}</h3>
             <p style="margin-top:8px;font-size:14px;line-height:1.45;color:var(--cream-ink)">Use <b>Next</b> for session plan, then <b>View task pages</b> below — or press <b>📋 Task</b> in the nav bar.</p>
@@ -548,7 +543,6 @@ function renderSlide(){
         <div class="title-main">
           <h1 class="title">${esc(l.title)}</h1>
           <p class="sub">${esc(l.subtitle||'')} ${l.focus?('· '+esc(l.focus)):''}</p>
-          <div class="timing">${pacing}</div>
           <div class="card cream" style="margin-top:8px">
             <h3>Lesson flow (~45 min teaching)</h3>
             <ol style="margin:10px 0 0 20px;line-height:1.6;font-size:15px;color:var(--cream-ink)">
