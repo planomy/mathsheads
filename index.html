@@ -184,6 +184,20 @@
   #tnotes .body{padding:18px;overflow:auto;flex:1;font-size:14.5px;line-height:1.55;color:var(--ink-dim);}
   #tnotes .body h4{color:var(--gold2);margin:12px 0 6px;font-size:15px;}
   #tnotes .body ul{margin:6px 0 6px 18px;}
+  #tnotes .body ol.qa{margin:6px 0 10px 0;padding:0;list-style:none;counter-reset:qa;}
+  #tnotes .body ol.qa li{
+    counter-increment:qa;display:grid;grid-template-columns:1.4fr auto;gap:8px 12px;
+    padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13.5px;line-height:1.4;
+  }
+  #tnotes .body ol.qa li::before{
+    content:counter(qa) ".";color:var(--gold2);font-weight:700;grid-column:1/-1;font-size:11px;letter-spacing:.04em;
+  }
+  #tnotes .body ol.qa .nq{color:var(--ink-dim);}
+  #tnotes .body ol.qa .na{color:var(--gold2);font-weight:700;text-align:right;white-space:nowrap;}
+  #tnotes .body .hook-ans{
+    margin:8px 0 12px;padding:10px 12px;border-radius:10px;
+    background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.28);color:var(--gold2);font-weight:700;
+  }
   /* Present mode */
   html.presenting body,html:fullscreen body{background:var(--bg1);}
   html.presenting #app,html:fullscreen #app{height:100dvh;width:100vw;}
@@ -259,6 +273,50 @@ function getAssessCtx(lessonId){
 function ansStr(q){
   const a = q?.answer ?? q;
   return Array.isArray(a) ? a[0] : a;
+}
+function stripTags(s){
+  return String(s ?? '').replace(/<[^>]+>/g, '');
+}
+function qaList(items){
+  const list = (items || []).filter(Boolean);
+  if(!list.length) return '<p><i>No items.</i></p>';
+  return `<ol class="qa">${list.map(q => {
+    const prompt = q?.prompt != null ? stripTags(q.prompt) : '';
+    const answer = stripTags(ansStr(q));
+    if(prompt){
+      return `<li><span class="nq">${esc(prompt)}</span><span class="na">${esc(answer)}</span></li>`;
+    }
+    return `<li><span class="na">${esc(answer)}</span></li>`;
+  }).join('')}</ol>`;
+}
+function answerKeyHtml(l){
+  if(!l || isAssessmentLesson(l)) return '';
+  let html = '';
+  if(l.hookSolution?.answer){
+    html += `<h4>Hook answer</h4><div class="hook-ans">${esc(stripTags(l.hookSolution.answer))}</div>`;
+  }
+  const tiers = diagTiers(l);
+  if(tiers.some(t => t.length)){
+    html += `<h4>Diagnostic answers</h4>`;
+    tiers.forEach((items, i) => {
+      if(!items.length) return;
+      html += `<p><b>Tier ${i + 1}</b></p>${qaList(items)}`;
+    });
+  }
+  if(l.practice){
+    [1, 2, 3].forEach(t => {
+      const items = l.practice[t] || [];
+      if(!items.length) return;
+      html += `<h4>Practice · Tier ${t}</h4>${qaList(items)}`;
+    });
+  }
+  if(l.wordProblems?.length){
+    html += `<h4>Word problems</h4>${qaList(l.wordProblems)}`;
+  }
+  if(l.concept?.example){
+    html += `<h4>Concept example</h4><p>${esc(stripTags(l.concept.example))}</p>`;
+  }
+  return html;
 }
 
 function diagTiers(l){
@@ -693,18 +751,9 @@ function fillNotes(l, phase){
   else html += '<p>No notes for this slide yet.</p>';
   if(phase==='diagnostic' && l.notes?.placement){
     html += `<h4>Placement guide</h4>${l.notes.placement}`;
-    const tiers = diagTiers(l);
-    html += `<h4>Diagnostic answers</h4>`;
-    tiers.forEach((items, i) => {
-      html += `<p><b>Tier ${i+1}</b></p><ol>${items.map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ol>`;
-    });
   }
-  if(phase==='practice'){
-    html += `<h4>Answers · Tier 1</h4><ul>${(l.practice[1]||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
-    html += `<h4>Answers · Tier 2</h4><ul>${(l.practice[2]||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
-    html += `<h4>Answers · Tier 3</h4><ul>${(l.practice[3]||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
-    html += `<h4>Word problems</h4><ul>${(l.wordProblems||[]).map(q=>`<li>${esc(ansStr(q))}</li>`).join('')}</ul>`;
-  }
+  // Full answer key on every teaching slide (prompt → answer)
+  html += answerKeyHtml(l);
   body.innerHTML = html;
 }
 
