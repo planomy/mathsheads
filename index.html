@@ -186,18 +186,26 @@
   #tnotes .body ul{margin:6px 0 6px 18px;}
   #tnotes .body ol.qa{margin:6px 0 10px 0;padding:0;list-style:none;counter-reset:qa;}
   #tnotes .body ol.qa li{
-    counter-increment:qa;display:grid;grid-template-columns:1.4fr auto;gap:8px 12px;
+    counter-increment:qa;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:6px 10px;
     padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13.5px;line-height:1.4;
   }
   #tnotes .body ol.qa li::before{
     content:counter(qa) ".";color:var(--gold2);font-weight:700;grid-column:1/-1;font-size:11px;letter-spacing:.04em;
   }
-  #tnotes .body ol.qa .nq{color:var(--ink-dim);}
-  #tnotes .body ol.qa .na{color:var(--gold2);font-weight:700;text-align:right;white-space:nowrap;}
+  #tnotes .body ol.qa .nq{color:var(--ink-dim);min-width:0;}
+  #tnotes .body ol.qa .na{color:var(--gold2);font-weight:700;text-align:right;white-space:normal;overflow-wrap:anywhere;}
   #tnotes .body .hook-ans{
     margin:8px 0 12px;padding:10px 12px;border-radius:10px;
     background:rgba(240,192,64,.1);border:1px solid rgba(240,192,64,.28);color:var(--gold2);font-weight:700;
   }
+  #tnotes .body .answer-key{
+    margin:0 0 14px;padding:12px 12px 4px;border-radius:12px;
+    background:rgba(240,192,64,.06);border:1px solid rgba(240,192,64,.22);
+  }
+  #tnotes .body .answer-key > h3{
+    margin:0 0 8px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold2);
+  }
+  #tnotes .body .phase-notes{margin-top:4px}
   /* Present mode */
   html.presenting body,html:fullscreen body{background:var(--bg1);}
   html.presenting #app,html:fullscreen #app{height:100dvh;width:100vw;}
@@ -291,32 +299,52 @@ function qaList(items){
 }
 function answerKeyHtml(l){
   if(!l || isAssessmentLesson(l)) return '';
-  let html = '';
+  let inner = '';
   if(l.hookSolution?.answer){
-    html += `<h4>Hook answer</h4><div class="hook-ans">${esc(stripTags(l.hookSolution.answer))}</div>`;
+    inner += `<h4>Hook answer</h4><div class="hook-ans">${esc(stripTags(l.hookSolution.answer))}</div>`;
   }
   const tiers = diagTiers(l);
   if(tiers.some(t => t.length)){
-    html += `<h4>Diagnostic answers</h4>`;
+    inner += `<h4>Diagnostic</h4>`;
     tiers.forEach((items, i) => {
       if(!items.length) return;
-      html += `<p><b>Tier ${i + 1}</b></p>${qaList(items)}`;
+      inner += `<p><b>Tier ${i + 1}</b></p>${qaList(items)}`;
     });
   }
   if(l.practice){
     [1, 2, 3].forEach(t => {
       const items = l.practice[t] || [];
       if(!items.length) return;
-      html += `<h4>Practice · Tier ${t}</h4>${qaList(items)}`;
+      inner += `<h4>Practice · Tier ${t}</h4>${qaList(items)}`;
     });
   }
   if(l.wordProblems?.length){
-    html += `<h4>Word problems</h4>${qaList(l.wordProblems)}`;
+    inner += `<h4>Word problems</h4>${qaList(l.wordProblems)}`;
   }
   if(l.concept?.example){
-    html += `<h4>Concept example</h4><p>${esc(stripTags(l.concept.example))}</p>`;
+    inner += `<h4>Concept example</h4><p>${esc(stripTags(l.concept.example))}</p>`;
   }
-  return html;
+  if(!inner) return '<div class="answer-key"><h3>Answer key</h3><p><i>No answers stored for this lesson yet.</i></p></div>';
+  return `<div class="answer-key"><h3>Answer key</h3>${inner}</div>`;
+}
+
+function assessAnswerKeyHtml(session){
+  const items = session?.items || [];
+  const answers = session?.answers || [];
+  if(!items.length && !answers.length) return '';
+  const rows = items.map((prompt, i) => {
+    const answer = answers[i];
+    const q = esc(stripTags(prompt));
+    if(answer == null || answer === ''){
+      return `<li><span class="nq">${q}</span><span class="na">—</span></li>`;
+    }
+    return `<li><span class="nq">${q}</span><span class="na">${esc(stripTags(answer))}</span></li>`;
+  });
+  answers.slice(items.length).forEach((answer, i) => {
+    rows.push(`<li><span class="nq">Q${items.length + i + 1}</span><span class="na">${esc(stripTags(answer))}</span></li>`);
+  });
+  if(!rows.length) return '';
+  return `<div class="answer-key"><h3>Answer key</h3><ol class="qa">${rows.join('')}</ol></div>`;
 }
 
 function diagTiers(l){
@@ -732,7 +760,8 @@ function fillNotes(l, phase){
     const ctx = getAssessCtx(l.id);
     const assess = ctx?.assess;
     const session = ctx?.session;
-    if(session?.notes) html += session.notes;
+    html += assessAnswerKeyHtml(session);
+    if(session?.notes) html += `<div class="phase-notes">${session.notes}</div>`;
     else html += '<p>Session notes — see assessments.js</p>';
     if(assess?.pages?.length){
       const guide = assess.pages.find(p=>p.teacherOnly);
@@ -746,14 +775,14 @@ function fillNotes(l, phase){
     return;
   }
 
+  // Answers first so they're visible without scrolling past phase tips
+  html += answerKeyHtml(l);
+
   const n = l.notes && l.notes[phase];
-  if(n) html += n;
-  else html += '<p>No notes for this slide yet.</p>';
+  if(n) html += `<div class="phase-notes"><h4>Teaching notes</h4>${n}</div>`;
   if(phase==='diagnostic' && l.notes?.placement){
     html += `<h4>Placement guide</h4>${l.notes.placement}`;
   }
-  // Full answer key on every teaching slide (prompt → answer)
-  html += answerKeyHtml(l);
   body.innerHTML = html;
 }
 

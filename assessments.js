@@ -36,6 +36,12 @@ const ASSESSMENTS = {
           'Place value charts — hundredths, mixed numerals',
           'Order decimals: 2.21, 0.02, 2.22, 1.25, 1.02, 0.50'
         ],
+        answers: [
+          '¾ is greater than ¼',
+          '0.40 is greater than 0.04',
+          'See marking guide (place-value / mixed numeral items)',
+          '0.02, 0.50, 1.02, 1.25, 2.21, 2.22'
+        ],
         notes: '<p>~45 min after homework. Distribute task + number line sheet. Circulate — watch shading and place-value alignment.</p><p>Students who finish early can check working, not start Session 2 questions.</p>'
       },
       'w3-l4': {
@@ -49,6 +55,13 @@ const ASSESSMENTS = {
           '50 m freestyle — who qualifies for regional final? (&lt; 39½ s)',
           'Georgie\'s fabric — add mixed numerals to reach 2⅖ m',
           'Calculate remaining items on the task'
+        ],
+        answers: [
+          'See marking guide + number line sheet',
+          'See marking guide (Jill reasoning)',
+          'Times under 39.5 s qualify — see marking guide for sample times',
+          'See marking guide (mixed numeral total → 2⅖ m)',
+          'See marking guide for remaining items'
         ],
         notes: '<p>Collect Session 1 work if not already submitted. Emphasise <b>show working</b> on Q10–11.</p><p>Swimming question: compare to 39.5 seconds precisely.</p>'
       }
@@ -101,6 +114,13 @@ const ASSESSMENTS = {
           'Measure water lost in <b>3 minutes</b> (ml)',
           'Add class results to the shared table'
         ],
+        answers: [
+          'Process — no single numeric answer',
+          'Process — safe drip setup',
+          'Process — method recorded',
+          'Class-dependent (ml in 3 min)',
+          'Class table complete'
+        ],
         notes: '<p>Outdoor tap or sink station — rotate groups if needed. Safety: slip hazard, mop spills.</p><p>Students who miss collection can use a classmate\'s data with annotation.</p>'
       },
       'w7-l2': {
@@ -113,6 +133,12 @@ const ASSESSMENTS = {
           'Graph 1 — on <b>grid paper</b> (hand-drawn)',
           'Graph 2 — <b>online graph maker</b>; snip and paste into task',
           'Complete Part A table with all class results'
+        ],
+        answers: [
+          '24-hour total = (3-min ml) × 480  (because 24h = 480 × 3 min)',
+          'Hand-drawn graph — check scale, labels, title (marking guide)',
+          'Online graph attached — same data as Graph 1',
+          'Class table complete'
         ],
         notes: '<p>Discuss appropriate graph types (bar/column for categorical names; consider scale for ml).</p><p>Check students snip/attach online graph before closing tab.</p>'
       },
@@ -128,6 +154,13 @@ const ASSESSMENTS = {
           '128 drips/hour — drips in 24 hours?',
           '1872 drops at 78/min — how many minutes?'
         ],
+        answers: [
+          '222 drops',
+          '720 drips',
+          '108 drops/min',
+          '3,072 drips',
+          '24 minutes'
+        ],
         notes: '<p>Insist on <b>efficient strategies</b> and clear working. Allow scrap paper.</p><p>Link back to their investigation data where possible.</p>'
       },
       'w7-l4': {
@@ -140,6 +173,12 @@ const ASSESSMENTS = {
           'Tap drips 172/hr; faster tap drips twice as fast — drops in 36 hours?',
           'Solve: <b>(156 × 8) ÷ ___ = 52</b>',
           'Final check, submit investigation'
+        ],
+        answers: [
+          '21',
+          '12,384 drops (344/hr × 36)',
+          '24',
+          'Submit — see marking guide for A–E'
         ],
         notes: '<p>Collect all parts. Note authentication: teacher observed development over sessions.</p><p>Celebrate real-world connection — water conservation discussion if time.</p>'
       }
