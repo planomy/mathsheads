@@ -511,8 +511,13 @@ function annotateBoardLead(a){
   }
   return `<p>${noteHtml(prompt)}</p><p>Model each step in the space below — think aloud as you go.</p>`;
 }
-function wedoBoardLead(){
-  return `<p>Try together — mini-whiteboards, partners, or choral response. Show your working in the space below.</p>`;
+function wedoTeachTip(l, f){
+  const authored = l.wedoTip || l.notes?.wedoTip || '';
+  if(authored) return noteHtml(authored);
+  const notice = f.teach?.notice;
+  if(notice) return noteHtml(stripTags(notice));
+  if(l.focus) return esc(l.focus);
+  return 'Cold-call one explanation per question before you reveal with R.';
 }
 /* Rich phase notes when authored tips are thin one-liners. */
 function authorPhaseNote(l, phase){
@@ -1083,13 +1088,12 @@ function renderSlide(){
   else if(phase==='wedo'){
     html = `${toplineHtml('wedo','We do · guided practice')}
       <h1 class="title">Let's try these together</h1>
-      <p class="sub">Guide one at a time — annotate the white space, then press <kbd>R</kbd> to reveal answers.</p>
+      <p class="sub"><b>Tip:</b> ${wedoTeachTip(l, f)} · Annotate below, then <kbd>R</kbd> to reveal.</p>
       <div class="wedo-panels">${f.wedo.map((q,i)=>`
         <div class="teach-board">
           <div class="tb-head">
             <span class="board-num">${i+1}</span>
             <div class="tb-prompt">${q.prompt}</div>
-            <div class="tb-lead">${wedoBoardLead()}</div>
           </div>
           <div class="tb-space" aria-hidden="true"></div>
         </div>`).join('')}</div>`;
