@@ -332,7 +332,7 @@
 <script>
 /* Gradual Release progression (~50 min teaching block) */
 const PHASES = ['title','hook','retrieval','intention','teach','annotate','wedo','practice','exit'];
-const PHASE_LABELS = { title:'Title', hook:'Hook', retrieval:'Warm-up', intention:'Today\'s goal', teach:'Watch this', annotate:'Board work', wedo:'Together', practice:'Your turn', exit:'Exit check' };
+const PHASE_LABELS = { title:'Title', hook:'Hook', retrieval:'Recap', intention:'Today\'s goal', teach:'Watch this', annotate:'Board work', wedo:'Together', practice:'Your turn', exit:'Exit check' };
 const MODE_BY_PHASE = { title:'', hook:'TALK', retrieval:'TEAMS', intention:'WATCH', teach:'WATCH', annotate:'NOTEBOOK', wedo:'TALK', practice:'NOTEBOOK', exit:'NOTEBOOK' };
 const MODE_CLASS = { TALK:'mode-talk', TEAMS:'mode-teams', WATCH:'mode-watch', NOTEBOOK:'mode-notebook' };
 const PHASE_TIMING = { hook:3, retrieval:4, intention:2, teach:8, annotate:8, wedo:8, practice:12, exit:5 };
@@ -381,7 +381,7 @@ function answerKeyHtml(l){
   const f = buildTeachFlow(l);
   let inner = '';
   if(f.retrieval?.length){
-    inner += `<h4>Retrieval</h4>${qaList(f.retrieval)}`;
+    inner += `<h4>Recap</h4>${qaList(f.retrieval)}`;
   }
   if(f.annotate?.answer){
     inner += `<h4>Live annotation (hook) answer</h4><div class="hook-ans">${esc(stripTags(f.annotate.answer))}</div>`;
@@ -551,8 +551,11 @@ function phaseTeachNotesHtml(l, phase){
     if(hk.context) auto += `<p><b>Context:</b> ${noteHtml(hk.context)}</p>`;
   }
   else if(phase === 'retrieval'){
-    auto += `<p><b>Purpose:</b> Wake up prior knowledge — fast, low-stakes recall before new learning.</p>`;
-    auto += `<p><b>Do:</b> Mini-whiteboards or teams (~4 min). Circulate for misconceptions. Reveal with <kbd>R</kbd> only after most have attempted.</p>`;
+    const from = f.recapFrom;
+    auto += from
+      ? `<p><b>Purpose:</b> Recap last lesson — <i>${esc(from.title)}</i> (W${from.week} L${from.lesson}). Fast, low-stakes check before new learning.</p>`
+      : `<p><b>Purpose:</b> Warm-up recall — first lesson (or no prior teach lesson), so using today’s easiest questions.</p>`;
+    auto += `<p><b>Do:</b> Mini-whiteboards or teams (~4 min). Circulate for misconceptions from <b>last</b> lesson. Reveal with <kbd>R</kbd> only after most have attempted.</p>`;
     if(f.retrieval?.length){
       auto += `<p><b>Listen for:</b></p><ul>${f.retrieval.map(q =>
         `<li>${noteHtml(q.prompt)} <span style="color:var(--gold2)">→ ${esc(stripTags(q.answer))}</span></li>`
@@ -622,7 +625,7 @@ function phaseTeachNotesHtml(l, phase){
   }
   else if(phase === 'title'){
     auto += l.focus ? `<p><b>Focus:</b> ${esc(l.focus)}</p>` : '';
-    auto += `<p><b>Flow today:</b> Hook → Retrieval → Intention → Teach → Annotate → We do → Practice → Exit (~50 min).</p>`;
+    auto += `<p><b>Flow today:</b> Hook → Recap → Intention → Teach → Annotate → We do → Practice → Exit (~50 min).</p>`;
     auto += `<p><b>Materials:</b> mini-whiteboards, notebooks, and any manipulatives named in the hook.</p>`;
   }
 
@@ -639,12 +642,9 @@ function buildTeachFlow(l){
   const tiers = diagTiers(l);                 // [t1, t2, t3]
   const p = l.practice || {};
 
-  // Retrieval — explicit, else first 3 of diagnostic tier 2 (fallback t1 → t3)
-  let retrieval = l.retrieval && l.retrieval.length ? normItems(l.retrieval) : null;
-  if(!retrieval){
-    const src = tiers[1]?.length ? tiers[1] : (tiers[0]?.length ? tiers[0] : tiers[2]);
-    retrieval = normItems((src || []).slice(0, 3));
-  }
+  // Recap — 3 questions from the previous teaching lesson (exit/practice/diagnostic)
+  const recap = pickRecapQuestions(l);
+  const retrieval = recap.items;
 
   // Learning intention
   const li = l.intention || {};
@@ -709,6 +709,7 @@ function buildTeachFlow(l){
   return {
     hook: l.hook,
     retrieval,
+    recapFrom: recap.from,
     intention,
     teach,
     annotate,
@@ -824,6 +825,55 @@ function adjacentLesson(delta){
   const i = list.findIndex(l => l.id === lessonId);
   if(i < 0) return null;
   return list[i + delta] || null;
+}
+
+/** Previous ready teaching lesson (skips assessments) — used for Recap warm-up. */
+function previousTeachingLesson(l){
+  const list = readyLessons();
+  let i = list.findIndex(x => x.id === l.id);
+  if(i < 0) return null;
+  while(i > 0){
+    i -= 1;
+    const cand = list[i];
+    if(cand && !isAssessmentLesson(cand)) return cand;
+  }
+  return null;
+}
+
+/** 3 quick questions from the previous lesson (exit → practice → diagnostic). */
+function pickRecapQuestions(l){
+  if(l.retrieval && l.retrieval.length){
+    return { items: normItems(l.retrieval).slice(0, 3), from: null };
+  }
+  const prev = previousTeachingLesson(l);
+  if(prev){
+    const pool = [];
+    const push = (arr) => {
+      normItems(arr).forEach(q => {
+        if(!q.prompt) return;
+        if(pool.some(p => stripTags(p.prompt) === stripTags(q.prompt))) return;
+        pool.push(q);
+      });
+    };
+    // Prefer what they finished with last lesson, then practice, then diagnostic
+    const pr = prev.practice || {};
+    const prevExit = (prev.exit && prev.exit.length) ? prev.exit
+      : ((prev.exitTicket && prev.exitTicket.length) ? prev.exitTicket
+      : ((pr[1]?.length ? pr[1] : (pr[2] || [])).slice(0, 2)));
+    push(prevExit);
+    push(pr[2]?.length ? pr[2] : (pr[1] || []));
+    push(pr[1] || []);
+    if(prev.wedo?.length) push(prev.wedo);
+    const tiers = diagTiers(prev);
+    push(tiers[1]?.length ? tiers[1] : (tiers[0] || tiers[2] || []));
+    if(pool.length){
+      return { items: pool.slice(0, 3), from: prev };
+    }
+  }
+  // First lesson (or thin previous) — gentle start from today's easiest bank
+  const tiers = diagTiers(l);
+  const src = tiers[0]?.length ? tiers[0] : (tiers[1] || tiers[2] || []);
+  return { items: normItems(src).slice(0, 3), from: null };
 }
 
 function navPrev(){
@@ -1007,7 +1057,7 @@ function renderSlide(){
             <h3>Today’s lesson path</h3>
             <ol style="margin:10px 0 0 20px;line-height:1.55;font-size:14.5px;color:var(--cream-ink)">
               <li><b>Hook</b> — a real-life puzzle to talk about</li>
-              <li><b>Warm-up</b> — quick questions to wake up your maths brain</li>
+              <li><b>Recap</b> — 3 quick questions from last lesson</li>
               <li><b>Today’s goal</b> — what we’re learning and how we’ll know</li>
               <li><b>Watch this</b> — teacher shows the idea</li>
               <li><b>Board work</b> — we solve one together on the board</li>
@@ -1034,10 +1084,14 @@ function renderSlide(){
       <p class="sub" style="margin-top:10px">Think first. Then talk with a partner — no racing to the answer yet.</p>`;
   }
   else if(phase==='retrieval'){
-    html = `${toplineHtml('retrieval','Wake up your maths brain')}
-      <h1 class="title">Warm-up — quick questions</h1>
-      <p class="sub">Whiteboards or teams. <b>~4 min.</b> Fast warm-up — we’ll reveal answers after you’ve had a go.</p>
-      <div class="retrieval-grid">${f.retrieval.map((q,i)=>`
+    const from = f.recapFrom;
+    const fromLine = from
+      ? `From last lesson: <b>${esc(from.title)}</b> (Week ${from.week} · Lesson ${from.lesson}).`
+      : `Quick warm-up to get started.`;
+    html = `${toplineHtml('retrieval','Recap · last lesson')}
+      <h1 class="title">Recap — 3 quick questions</h1>
+      <p class="sub">${fromLine} Whiteboards or teams · <b>~4 min</b> — we’ll reveal answers after you’ve had a go.</p>
+      <div class="retrieval-grid">${(f.retrieval||[]).map((q,i)=>`
         <div class="retrieval-card"><span class="rn">${i+1}</span><div class="rq">${q.prompt}</div></div>`).join('')}</div>`;
   }
   else if(phase==='intention'){
