@@ -233,17 +233,24 @@
   .assess-panel .body ul{margin:6px 0 6px 18px;}
   .assess-panel .body a{color:var(--gold2);font-weight:700;}
   .assess-panel .preview-scroll img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);background:#fff;}
-  /* Nav */
+  /* Nav — fixed slots so pills don’t shove each other when reveal/assess toggle */
   #nav{display:flex;justify-content:center;padding:8px 12px;border-top:1px solid rgba(255,255,255,.08);background:var(--bg0);flex-shrink:0;}
-  .nav-inner{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;max-width:100%;}
+  .nav-inner{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;max-width:100%;}
   .nav-pager{display:inline-flex;align-items:stretch;gap:6px;flex-shrink:0;}
   .nav-pager .btn{width:7.4rem;padding-left:8px;padding-right:8px;text-align:center;white-space:nowrap;}
-  .btn{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;}
+  .btn{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;flex-shrink:0;white-space:nowrap;}
   .btn:hover{border-color:var(--gold);background:rgba(255,255,255,.12);color:#fff;}
   .btn.primary{background:linear-gradient(135deg,var(--gold),var(--accent));color:#2a1808;border:none;}
   .btn.notes-open{border-color:var(--gold);box-shadow:0 0 0 1px rgba(240,192,64,.35);}
-  #counter{font-weight:800;color:var(--ink-dim);width:14.5rem;text-align:center;font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums;flex-shrink:0;}
-  select#jump{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 10px;font-size:12px;width:10.5rem;max-width:10.5rem;}
+  #mapBtn{width:7.6rem;}
+  #notesBtn{width:8.2rem;}
+  #presentBtn{width:6.6rem;}
+  #revealBtn{width:6.4rem;}
+  #assessBtn{width:5.6rem;}
+  /* Keep layout stable when reveal/assess are inactive */
+  .btn.reveal[hidden],#assessBtn.is-idle{visibility:hidden;pointer-events:none;}
+  .btn.reveal[hidden]{display:inline-block;}
+  select#jump{background:rgba(255,255,255,.08);color:var(--ink);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:8px 10px;font-size:12px;width:11rem;max-width:11rem;flex-shrink:0;}
   #tnotes{position:fixed;right:0;top:0;height:100%;width:min(420px,92vw);transform:translateX(100%);transition:transform .28s ease;background:var(--bg1);border-left:1px solid rgba(255,255,255,.1);z-index:40;display:flex;flex-direction:column;box-shadow:-12px 0 40px rgba(12,8,24,.35);}
   #tnotes.open{transform:none;}
   #tnotes header{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;}
@@ -299,14 +306,13 @@
     <div class="nav-inner">
       <button class="btn" id="mapBtn" type="button">🗺 Term map</button>
       <select id="jump" aria-label="Jump to slide"></select>
-      <span id="counter">—</span>
       <div class="nav-pager">
         <button class="btn" id="prev" type="button">← Prev</button>
         <button class="btn primary" id="next" type="button">Next →</button>
       </div>
       <button class="btn reveal" id="revealBtn" type="button" title="R" hidden>💡 Reveal</button>
-      <button class="btn" id="notesBtn" type="button">Teacher notes</button>
-      <button class="btn assess" id="assessBtn" type="button" style="display:none" title="A">📋 Task</button>
+      <button class="btn" id="notesBtn" type="button">Notes</button>
+      <button class="btn assess is-idle" id="assessBtn" type="button" title="A" aria-hidden="true">📋 Task</button>
       <button class="btn" id="presentBtn" type="button" title="F">⛶ Present</button>
     </div>
   </nav>
@@ -1153,35 +1159,42 @@ function toggleReveal(){
 }
 
 function updateNav(){
-  const counter = document.getElementById('counter');
   const jump = document.getElementById('jump');
   const prev = document.getElementById('prev');
   const next = document.getElementById('next');
   const assessBtn = document.getElementById('assessBtn');
   if(mode==='map'){
-    counter.textContent = 'Term map';
     jump.innerHTML = '<option value="">—</option>';
     jump.disabled = true;
     prev.disabled = true;
     next.disabled = true;
-    assessBtn.style.display = 'none';
+    prev.textContent = '← Prev';
+    next.textContent = 'Next →';
+    prev.removeAttribute('title');
+    next.removeAttribute('title');
+    assessBtn.classList.add('is-idle');
+    assessBtn.setAttribute('aria-hidden','true');
+    assessBtn.classList.remove('open');
     return;
   }
   const l = getLesson(lessonId);
   const phases = currentPhases(l);
   const labels = currentPhaseLabels(l);
   const isAssess = isAssessmentLesson(l);
-  assessBtn.style.display = isAssess ? '' : 'none';
+  assessBtn.classList.toggle('is-idle', !isAssess);
+  assessBtn.setAttribute('aria-hidden', isAssess ? 'false' : 'true');
   assessBtn.classList.toggle('open', document.getElementById('assessOverlay').classList.contains('open'));
   jump.disabled = false;
   const prevL = adjacentLesson(-1);
   const nextL = adjacentLesson(1);
   prev.disabled = slideIdx <= 0 && !prevL;
   next.disabled = slideIdx >= phases.length - 1 && !nextL;
-  prev.textContent = (slideIdx <= 0 && prevL) ? '← Prev lesson' : '← Prev';
-  next.textContent = (slideIdx >= phases.length - 1 && nextL) ? 'Next lesson →' : 'Next →';
-  counter.textContent = `W${l.week} L${l.lesson} · ${slideIdx+1}/${phases.length} · ${labels[phases[slideIdx]]}`;
-  jump.innerHTML = phases.map((p,i)=>`<option value="${i}"${i===slideIdx?' selected':''}>${i+1}. ${labels[p]}</option>`).join('');
+  // Keep button labels short so fixed widths stay stable; tip shows lesson jump
+  prev.textContent = '← Prev';
+  next.textContent = 'Next →';
+  prev.title = (slideIdx <= 0 && prevL) ? `Previous lesson: ${prevL.title}` : 'Previous slide';
+  next.title = (slideIdx >= phases.length - 1 && nextL) ? `Next lesson: ${nextL.title}` : 'Next slide';
+  jump.innerHTML = phases.map((p,i)=>`<option value="${i}"${i===slideIdx?' selected':''}>${i+1}/${phases.length} · ${labels[p]}</option>`).join('');
   updatePresentScale();
 }
 
