@@ -89,6 +89,51 @@
   .slide.kid-slide .tier-col ol{font-size:clamp(16px,1.35vw,18px);}
   .slide.kid-slide .word-item{font-size:clamp(17px,1.4vw,19px);}
   .slide.kid-slide .word-item .n{width:26px;height:26px;font-size:16px;}
+  /* ===== Gradual Release phases ===== */
+  .topline{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .topline .eyebrow{margin-bottom:0;}
+  .mode-chip{margin-left:auto;align-self:flex-start;border-radius:999px;padding:6px 13px;font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.14);white-space:nowrap;}
+  .mode-chip.mode-talk{background:rgba(240,192,64,.18);color:var(--gold2);border-color:rgba(240,192,64,.4);}
+  .mode-chip.mode-teams{background:rgba(150,130,240,.2);color:#cfc4ff;border-color:rgba(150,130,240,.4);}
+  .mode-chip.mode-watch{background:rgba(120,180,240,.2);color:#bfe0ff;border-color:rgba(120,180,240,.4);}
+  .mode-chip.mode-notebook{background:rgba(126,217,154,.18);color:#bff2cf;border-color:rgba(126,217,154,.4);}
+  .retrieval-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:0;}
+  .retrieval-card{border-radius:16px;padding:16px 18px;background:rgba(150,130,240,.12);border:2px solid rgba(150,130,240,.35);display:flex;flex-direction:column;gap:10px;min-height:0;}
+  .retrieval-card .rn{width:30px;height:30px;border-radius:50%;background:rgba(150,130,240,.3);color:#e6e0ff;font-weight:900;display:grid;place-items:center;font-size:15px;}
+  .retrieval-card .rq{font-size:clamp(16px,1.6vw,21px);font-weight:700;line-height:1.3;}
+  .intention-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;flex:1;min-height:0;}
+  .intention-grid .card{overflow:auto;min-height:0;}
+  .success-list{list-style:none;margin:8px 0 0;padding:0;}
+  .success-list li{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:clamp(15px,1.5vw,19px);line-height:1.35;}
+  .success-list li::before{content:'✓';flex:none;width:26px;height:26px;border-radius:50%;background:rgba(126,217,154,.25);color:var(--t1);font-weight:900;display:grid;place-items:center;font-size:14px;}
+  .vocab-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .vocab-chips span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 12px;font-size:14px;font-weight:700;color:var(--ink-dim);}
+  .whiteboard{flex:1;min-height:0;border-radius:18px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03),rgba(255,255,255,.03) 38px,rgba(255,255,255,.07) 39px);border:2px dashed rgba(255,255,255,.22);padding:18px 22px;overflow:auto;}
+  .whiteboard .wb-prompt{font-size:clamp(16px,1.6vw,21px);font-weight:800;color:var(--gold2);margin-bottom:12px;}
+  .wedo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;flex:1;min-height:0;}
+  .wedo-card{border-radius:16px;padding:16px 18px;background:rgba(240,192,64,.1);border:2px solid rgba(240,192,64,.32);display:flex;flex-direction:column;gap:10px;min-height:0;}
+  .wedo-card .wn{width:30px;height:30px;border-radius:50%;background:var(--gold);color:#2a1808;font-weight:900;display:grid;place-items:center;font-size:15px;}
+  .wedo-card .wq{font-size:clamp(16px,1.6vw,21px);font-weight:700;line-height:1.3;}
+  .practice-notebook{border-radius:16px;padding:16px 20px;background:rgba(126,217,154,.08);border:1px solid rgba(126,217,154,.28);min-height:0;}
+  .practice-notebook h4{color:#bff2cf;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+  .practice-notebook ol{margin:4px 0 0 20px;font-size:clamp(16px,1.5vw,20px);line-height:1.5;color:var(--ink-dim);}
+  .practice-notebook ol li{margin-bottom:6px;}
+  .soaker{margin-top:12px;padding:12px 16px;border-radius:14px;background:rgba(240,192,64,.14);border:1px solid rgba(240,192,64,.35);font-size:clamp(15px,1.4vw,18px);font-weight:700;color:var(--gold2);}
+  .soaker b{background:var(--gold);color:#2a1808;padding:3px 10px;border-radius:999px;margin-right:10px;font-size:12px;letter-spacing:.08em;}
+  .word-mini{margin-top:12px;}
+  .word-mini h4{color:var(--ink-faint);font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+  .word-mini .word-item{margin-bottom:8px;}
+  .exit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;flex:1;min-height:0;}
+  .exit-card{border-radius:16px;padding:20px 22px;background:rgba(126,217,154,.1);border:2px solid rgba(126,217,154,.35);display:flex;flex-direction:column;gap:12px;min-height:0;}
+  .exit-card .en{width:32px;height:32px;border-radius:50%;background:rgba(126,217,154,.3);color:var(--t1);font-weight:900;display:grid;place-items:center;font-size:16px;}
+  .exit-card .eq{font-size:clamp(18px,1.8vw,24px);font-weight:700;line-height:1.3;}
+  /* answer reveal drawer */
+  .answer-drawer{position:absolute;left:24px;right:24px;bottom:18px;background:#17364d;color:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 18px 40px rgba(0,0,0,.4);transform:translateY(185%);transition:transform .24s ease;z-index:9;max-height:40%;overflow:auto;border:1px solid rgba(255,255,255,.12);}
+  .slide.answer-open .answer-drawer{transform:translateY(0);}
+  .answer-drawer .answer-kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9ce7df;font-weight:900;margin-bottom:6px;}
+  .answer-drawer .answer-content{font-size:clamp(16px,1.5vw,22px);font-weight:700;line-height:1.35;}
+  .btn.reveal{background:linear-gradient(135deg,#ffe08a,#e8b838);color:#4c3b00;border:none;font-weight:900;}
+  .btn.reveal[hidden]{display:none;}
   .screenlbl{position:absolute;left:34px;bottom:16px;color:var(--ink-faint);font-size:11px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none;}
   .corner{position:absolute;right:34px;bottom:16px;color:var(--ink-faint);font-size:11px;pointer-events:none;}
   .corner kbd{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:2px 6px;pointer-events:none;}
@@ -218,6 +263,7 @@
   html.presenting .practice-grid,html:fullscreen .practice-grid{flex:0 0 auto;}
   @media(max-width:800px){
     .diag-grid,.practice-grid{grid-template-columns:1fr;}
+    .retrieval-grid,.wedo-grid,.exit-grid,.intention-grid{grid-template-columns:1fr;}
     .title-layout,.hook-layout{grid-template-columns:1fr;}
     .hero-frame{min-height:200px;}
     .hero-frame img{min-height:200px;}
@@ -236,6 +282,7 @@
         <button class="btn" id="prev" type="button">← Prev</button>
         <button class="btn primary" id="next" type="button">Next →</button>
       </div>
+      <button class="btn reveal" id="revealBtn" type="button" title="R" hidden>💡 Reveal</button>
       <button class="btn" id="notesBtn" type="button">Teacher notes</button>
       <button class="btn assess" id="assessBtn" type="button" style="display:none" title="A">📋 Task</button>
       <button class="btn" id="presentBtn" type="button" title="F">⛶ Present</button>
@@ -252,11 +299,15 @@
     <div class="body" id="assessPanelBody"></div>
   </div>
 </div>
-<script src="lessons.js?v=6"></script>
+<script src="lessons.js?v=7"></script>
 <script src="assessments.js?v=5"></script>
 <script>
-const PHASES = ['title','diagnostic','hook','solution','concept','practice'];
-const PHASE_LABELS = { title:'Title', diagnostic:'Diagnostic', hook:'Hook', solution:'Solution', concept:'Concept', practice:'Practice' };
+/* Gradual Release progression (~50 min teaching block) */
+const PHASES = ['title','hook','retrieval','intention','teach','annotate','wedo','practice','exit'];
+const PHASE_LABELS = { title:'Title', hook:'Hook', retrieval:'Retrieval', intention:'Learning intention', teach:'Explicit teaching', annotate:'Live annotation', wedo:'We do', practice:'Independent practice', exit:'Exit ticket' };
+const MODE_BY_PHASE = { title:'', hook:'TALK', retrieval:'TEAMS', intention:'WATCH', teach:'WATCH', annotate:'NOTEBOOK', wedo:'TALK', practice:'NOTEBOOK', exit:'NOTEBOOK' };
+const MODE_CLASS = { TALK:'mode-talk', TEAMS:'mode-teams', WATCH:'mode-watch', NOTEBOOK:'mode-notebook' };
+const PHASE_TIMING = { hook:3, retrieval:4, intention:2, teach:8, annotate:8, wedo:8, practice:12, exit:5 };
 const ASSESS_PHASES = ['title','brief','task'];
 const ASSESS_PHASE_LABELS = { title:'Overview', brief:'This session', task:'Official task' };
 
@@ -299,13 +350,27 @@ function qaList(items){
 }
 function answerKeyHtml(l){
   if(!l || isAssessmentLesson(l)) return '';
+  const f = buildTeachFlow(l);
   let inner = '';
-  if(l.hookSolution?.answer){
-    inner += `<h4>Hook answer</h4><div class="hook-ans">${esc(stripTags(l.hookSolution.answer))}</div>`;
+  if(f.retrieval?.length){
+    inner += `<h4>Retrieval</h4>${qaList(f.retrieval)}`;
   }
+  if(f.annotate?.answer){
+    inner += `<h4>Live annotation (hook) answer</h4><div class="hook-ans">${esc(stripTags(f.annotate.answer))}</div>`;
+  }
+  if(f.wedo?.length){
+    inner += `<h4>We do</h4>${qaList(f.wedo)}`;
+  }
+  if(f.exit?.length){
+    inner += `<h4>Exit ticket</h4>${qaList(f.exit)}`;
+  }
+  if(f.practice?.soaker){
+    inner += `<h4>Soaker</h4><p>${esc(stripTags(f.practice.soaker))}</p>`;
+  }
+  // Full tier banks + diagnostic kept here for the teacher (not shown on the calm practice slide)
   const tiers = diagTiers(l);
   if(tiers.some(t => t.length)){
-    inner += `<h4>Diagnostic</h4>`;
+    inner += `<h4>Diagnostic bank (retrieval source)</h4>`;
     tiers.forEach((items, i) => {
       if(!items.length) return;
       inner += `<p><b>Tier ${i + 1}</b></p>${qaList(items)}`;
@@ -315,14 +380,14 @@ function answerKeyHtml(l){
     [1, 2, 3].forEach(t => {
       const items = l.practice[t] || [];
       if(!items.length) return;
-      inner += `<h4>Practice · Tier ${t}</h4>${qaList(items)}`;
+      inner += `<h4>Practice · Tier ${t} (full bank)</h4>${qaList(items)}`;
     });
   }
   if(l.wordProblems?.length){
     inner += `<h4>Word problems</h4>${qaList(l.wordProblems)}`;
   }
-  if(l.concept?.example){
-    inner += `<h4>Concept example</h4><p>${esc(stripTags(l.concept.example))}</p>`;
+  if((l.teach?.example) || l.concept?.example){
+    inner += `<h4>Worked example</h4><p>${esc(stripTags(l.teach?.example || l.concept.example))}</p>`;
   }
   if(!inner) return '<div class="answer-key"><h3>Answer key</h3><p><i>No answers stored for this lesson yet.</i></p></div>';
   return `<div class="answer-key"><h3>Answer key</h3>${inner}</div>`;
@@ -352,6 +417,104 @@ function diagTiers(l){
   if(!d) return [[],[],[]];
   if(Array.isArray(d)) return [1,2,3].map(i => d[i-1] ? [d[i-1]] : []);
   return [1,2,3].map(t => d[t] || []);
+}
+
+/* ---------- Gradual Release adapter ----------
+   Normalises legacy lesson data (diagnostic / hook / hookSolution / concept /
+   practice / wordProblems) into the 9-phase teach flow, preferring explicit
+   new-style fields (retrieval / intention / teach / annotate / wedo /
+   exit|exitTicket / soaker) when the author has supplied them. */
+function normItems(items){
+  return (items || []).filter(Boolean).map(q => ({ prompt: q.prompt, answer: ansStr(q) }));
+}
+function joinAnswers(items){
+  return normItems(items).map(q => stripTags(q.answer)).filter(Boolean).join('   ·   ');
+}
+function buildTeachFlow(l){
+  const tiers = diagTiers(l);                 // [t1, t2, t3]
+  const p = l.practice || {};
+
+  // Retrieval — explicit, else first 3 of diagnostic tier 2 (fallback t1 → t3)
+  let retrieval = l.retrieval && l.retrieval.length ? normItems(l.retrieval) : null;
+  if(!retrieval){
+    const src = tiers[1]?.length ? tiers[1] : (tiers[0]?.length ? tiers[0] : tiers[2]);
+    retrieval = normItems((src || []).slice(0, 3));
+  }
+
+  // Learning intention
+  const li = l.intention || {};
+  const intention = {
+    learning: li.learning || l.focus || l.concept?.heading || l.title,
+    success: (li.success && li.success.length) ? li.success
+      : [ l.focus || 'Use today’s strategy', 'Explain my thinking', 'Check with a partner' ],
+    vocab: li.vocab || []
+  };
+
+  // Explicit teaching — new teach block, else legacy concept
+  const teach = l.teach || l.concept || { heading: l.title, body: [], notice: '', example: '' };
+
+  // Live annotation — explicit, else derive from hookSolution
+  let annotate = l.annotate;
+  if(!annotate){
+    const s = l.hookSolution || {};
+    annotate = {
+      prompt: 'Work this out with me on the board.',
+      steps: s.steps || [],
+      answer: s.answer || '',
+      hints: []
+    };
+  } else {
+    annotate = { prompt: annotate.prompt || 'Work this out with me on the board.',
+      steps: annotate.steps || [], answer: annotate.answer || '', hints: annotate.hints || [] };
+  }
+
+  // We do — explicit, else 3 items from practice tier 2 (fallback t1)
+  let wedo = l.wedo && l.wedo.length ? normItems(l.wedo) : null;
+  if(!wedo){
+    const src = p[2]?.length ? p[2] : (p[1] || []);
+    wedo = normItems(src.slice(0, 3));
+  }
+
+  // Independent practice — one calm primary tier (tier 2 default) + soaker + ≤2 word problems
+  const primaryTier = p[2]?.length ? 2 : (p[1]?.length ? 1 : 3);
+  const primary = normItems((p[primaryTier] || []).slice(0, 4));
+  const soaker = l.soaker || l.wordProblems?.[0]?.prompt || '';
+  const words = (l.wordProblems || []).slice(l.soaker ? 0 : 1, l.soaker ? 2 : 3);
+
+  // Exit ticket — explicit, else 2 items from practice tier 1 (fallback t2)
+  let exit = (l.exit || l.exitTicket);
+  exit = (exit && exit.length) ? normItems(exit) : null;
+  if(!exit){
+    const src = p[1]?.length ? p[1] : (p[2] || []);
+    exit = normItems(src.slice(0, 2));
+  }
+
+  const reveal = {
+    retrieval: joinAnswers(retrieval),
+    annotate: annotate.answer ? stripTags(annotate.answer) : '',
+    wedo: joinAnswers(wedo),
+    practice: joinAnswers(primary),
+    exit: joinAnswers(exit),
+    soaker: ''
+  };
+
+  return {
+    hook: l.hook,
+    retrieval,
+    intention,
+    teach,
+    annotate,
+    wedo,
+    practice: { tier: primaryTier, primary, soaker, words },
+    exit,
+    reveal
+  };
+}
+
+function toplineHtml(phase, extraEyebrow){
+  const mode = MODE_BY_PHASE[phase];
+  const chip = mode ? `<div class="mode-chip ${MODE_CLASS[mode]}">${mode}</div>` : '';
+  return `<div class="topline"><span class="eyebrow">${extraEyebrow || PHASE_LABELS[phase]}</span>${chip}</div>`;
 }
 
 function imageBlock(img, extraClass, fallbackSrc){
@@ -392,6 +555,7 @@ function renderMap(){
   lessonId = null;
   slideIdx = 0;
   closeAssessOverlay();
+  document.getElementById('revealBtn').hidden = true;
   const el = document.getElementById('slide');
   el.className = 'slide map-slide';
   const weeks = {};
@@ -401,7 +565,7 @@ function renderMap(){
   });
   let html = `<span class="eyebrow">Teacher presentation · Term 3</span>
     <h1 class="title">Maths Heads — pick a lesson</h1>
-    <p class="sub">~45 min teaching block per lesson (70 min period incl. homework check &amp; routines). Present with <kbd>F</kbd>.</p>
+    <p class="sub">Gradual Release · ~50 min teaching block per lesson (hook → retrieval → intention → teach → annotate → we do → practice → exit). Present with <kbd>F</kbd>, reveal answers with <kbd>R</kbd>.</p>
     <div class="body-scroll">`;
   for(let w=1;w<=10;w++){
     if(!weeks[w]) continue;
@@ -608,18 +772,20 @@ function renderSlide(){
   const phase = phases[slideIdx];
   const phaseLabels = currentPhaseLabels(l);
   const el = document.getElementById('slide');
-  const kidSlide = ['diagnostic','solution','concept','practice'].includes(phase);
+  const kidSlide = ['retrieval','intention','teach','annotate','wedo','practice','exit'].includes(phase);
   el.className = kidSlide ? 'slide kid-slide' : 'slide';
 
   if(isAssessmentLesson(l)){
+    document.getElementById('revealBtn').hidden = true;
     renderAssessSlide(l, phase, el);
     updateNav();
     fillNotes(l, phase);
     return;
   }
 
+  const f = buildTeachFlow(l);
   let html = '';
-  const pacing = (l.pacing||[]).map(p=>`<span>${PHASE_LABELS[p.phase]||p.phase} ~${p.min}m</span>`).join('');
+  const min = PHASE_TIMING[phase];
 
   if(phase==='title'){
     const hero = heroBlock(l);
@@ -630,91 +796,134 @@ function renderSlide(){
           <h1 class="title">${esc(l.title)}</h1>
           <p class="sub">${esc(l.subtitle||'')} ${l.focus?('· '+esc(l.focus)):''}</p>
           <div class="card cream" style="margin-top:8px">
-            <h3>Lesson flow (~45 min teaching)</h3>
-            <ol style="margin:10px 0 0 20px;line-height:1.6;font-size:15px;color:var(--cream-ink)">
-              <li><b>Diagnostic</b> — 5 problems per tier (15 total); place students by band</li>
-              <li><b>Hook</b> — engaging real-life problem</li>
-              <li><b>Solution</b> — work through the hook together</li>
-              <li><b>Concept</b> — teach the maths</li>
-              <li><b>Practice</b> — 3 tiers + 3 word problems (same screen)</li>
+            <h3>Gradual Release flow (~50 min teaching)</h3>
+            <ol style="margin:10px 0 0 20px;line-height:1.55;font-size:14.5px;color:var(--cream-ink)">
+              <li><b>Hook</b> — real-life problem (~3m · TALK)</li>
+              <li><b>Retrieval</b> — wake up your maths brain (~4m · TEAMS)</li>
+              <li><b>Learning intention</b> — WALT &amp; success criteria (~2m · WATCH)</li>
+              <li><b>Explicit teaching</b> — I do (~8m · WATCH)</li>
+              <li><b>Live annotation</b> — model on the board (~8m · NOTEBOOK)</li>
+              <li><b>We do</b> — guided practice together (~8m · TALK)</li>
+              <li><b>Independent practice</b> — notebook + soaker (~12m · NOTEBOOK)</li>
+              <li><b>Exit ticket</b> — check for understanding (~5m · NOTEBOOK)</li>
             </ol>
           </div>
         </div>
       </div>`;
   }
-  else if(phase==='diagnostic'){
-    const labels = ['Tier 1','Tier 2','Tier 3'];
-    const cls = ['t1','t2','t3'];
-    const tiers = diagTiers(l);
-    html = `<span class="eyebrow">Diagnostic · observe &amp; place</span>
-      <h1 class="title">${esc(l.title)}</h1>
-      <p class="sub">Students work through each tier column on paper — <b>5 problems per tier</b>. They do not need to finish every column. Circulate and note the highest tier where they score <b>3+</b>.</p>
-      <div class="diag-grid">${tiers.map((items,i)=>`
-        <div class="diag-cell ${cls[i]}">
-          <div class="diag-lbl ${cls[i]}">${labels[i]} · ${items.length} problems</div>
-          <ol class="diag-list">${items.map((d,j)=>`<li><span class="n">${j+1}</span><span>${d.prompt}</span></li>`).join('')}</ol>
-        </div>`).join('')}</div>`;
-  }
   else if(phase==='hook'){
     const hookImg = hookImageBlock(l);
-    html = `<span class="eyebrow">Hook · real life</span>
-      <h1 class="title">${esc(l.hook.title||'Think about this…')}</h1>
+    const hk = f.hook || {};
+    html = `${toplineHtml('hook','Hook · real life')}
+      <h1 class="title">${esc(hk.title||'Think about this…')}</h1>
       <div class="hook-layout">
         ${hookImg || `<div class="hero-frame hook-img missing"></div>`}
         <div class="card hook-card" style="flex:1;display:flex;flex-direction:column;justify-content:center">
           <p style="color:var(--ink-dim);font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">🌍 Engaging problem</p>
-          <div class="hook-q">${l.hook.problem}</div>
-          ${l.hook.context?`<p style="color:var(--ink-dim);margin-top:12px;font-size:15px;line-height:1.45">${l.hook.context}</p>`:''}
+          <div class="hook-q">${hk.problem||''}</div>
+          ${hk.context?`<p style="color:var(--ink-dim);margin-top:12px;font-size:15px;line-height:1.45">${hk.context}</p>`:''}
         </div>
       </div>
-      <p class="sub" style="margin-top:10px">Give think time. Discuss strategies before revealing the solution.</p>`;
+      <p class="sub" style="margin-top:10px">Give think time. Turn and talk — no pens down the front yet.</p>`;
   }
-  else if(phase==='solution'){
-    const s = l.hookSolution;
-    html = `<span class="eyebrow">Work through the hook</span>
-      <h1 class="title">${esc(s.heading)}</h1>
-      <div class="body-scroll">
+  else if(phase==='retrieval'){
+    html = `${toplineHtml('retrieval','Wake up your maths brain')}
+      <h1 class="title">Retrieval — quick recall</h1>
+      <p class="sub">Whiteboards or teams. <b>~4 min.</b> Fast recall to warm up — press <kbd>R</kbd> to reveal answers.</p>
+      <div class="retrieval-grid">${f.retrieval.map((q,i)=>`
+        <div class="retrieval-card"><span class="rn">${i+1}</span><div class="rq">${q.prompt}</div></div>`).join('')}</div>`;
+  }
+  else if(phase==='intention'){
+    const it = f.intention;
+    html = `${toplineHtml('intention','Learning intention')}
+      <h1 class="title">What we're learning today</h1>
+      <div class="intention-grid">
         <div class="card cream">
-          <ol class="steps-list">${s.steps.map(st=>`<li>${st}</li>`).join('')}</ol>
-          ${s.answer?`<div class="notice"><b>Answer:</b> ${esc(s.answer)}</div>`:''}
+          <h3>We are learning to…</h3>
+          <p style="margin-top:8px">${it.learning}</p>
+          ${it.vocab?.length?`<div class="vocab-chips">${it.vocab.map(v=>`<span>${esc(v)}</span>`).join('')}</div>`:''}
+        </div>
+        <div class="card dark">
+          <h3>Success criteria</h3>
+          <ul class="success-list">${(it.success||[]).map(s=>`<li>${s}</li>`).join('')}</ul>
         </div>
       </div>`;
   }
-  else if(phase==='concept'){
-    const c = l.concept;
-    html = `<span class="eyebrow">Teach the concept</span>
-      <h1 class="title">${esc(c.heading)}</h1>
+  else if(phase==='teach'){
+    const t = f.teach;
+    html = `${toplineHtml('teach','Explicit teaching · I do')}
+      <h1 class="title">${esc(t.heading||l.title)}</h1>
       <div class="body-scroll">
         <div class="card cream">
-          ${c.body.map(p=>`<p style="margin-bottom:8px">${p}</p>`).join('')}
-          ${c.notice?`<div class="notice"><b>Notice:</b> ${esc(c.notice)}</div>`:''}
+          ${(t.body||[]).map(p=>`<p style="margin-bottom:8px">${p}</p>`).join('')}
+          ${t.notice?`<div class="notice"><b>Notice:</b> ${esc(t.notice)}</div>`:''}
         </div>
-        ${c.example?`<div class="card dark" style="margin-top:10px"><h3>Worked example</h3><p style="margin-top:8px;line-height:1.45">${c.example}</p></div>`:''}
+        ${t.example?`<div class="card dark" style="margin-top:10px"><h3>Worked example</h3><p style="margin-top:8px;line-height:1.45">${t.example}</p></div>`:''}
       </div>`;
+  }
+  else if(phase==='annotate'){
+    const a = f.annotate;
+    html = `${toplineHtml('annotate','Live annotation · model it')}
+      <h1 class="title">On the board, together</h1>
+      <div class="whiteboard">
+        <div class="wb-prompt">${a.prompt||'Work this out with me on the board.'}</div>
+        ${a.steps?.length?`<ol class="steps-list">${a.steps.map(st=>`<li>${st}</li>`).join('')}</ol>`
+          :`<p style="color:var(--ink-faint)">Model each step live — annotate as you think aloud.</p>`}
+      </div>`;
+  }
+  else if(phase==='wedo'){
+    html = `${toplineHtml('wedo','We do · guided practice')}
+      <h1 class="title">Let's try these together</h1>
+      <p class="sub">Guide it as a class — thumbs, mini-whiteboards, or partners. Press <kbd>R</kbd> to reveal answers.</p>
+      <div class="wedo-grid">${f.wedo.map((q,i)=>`
+        <div class="wedo-card"><span class="wn">${i+1}</span><div class="wq">${q.prompt}</div></div>`).join('')}</div>`;
   }
   else if(phase==='practice'){
-    const tiers = [['t1','Tier 1'],['t2','Tier 2'],['t3','Tier 3']];
-    html = `<span class="eyebrow">Differentiated practice</span>
-      <h1 class="title">Practice + word problems</h1>
-      <p class="sub">Assign by diagnostic band. Everyone attempts the <b>3 real-life problems</b> at the end.</p>
+    const pr = f.practice;
+    html = `${toplineHtml('practice','Independent practice · you do')}
+      <h1 class="title">Your turn — quiet maths</h1>
+      <p class="sub">Work in your notebook. Show every step. Fast finishers try the soaker.</p>
       <div class="body-scroll">
-        <div class="practice-grid">${tiers.map(([cls,lbl],ti)=>{
-          const qs = l.practice[ti+1]||[];
-          return `<div class="tier-col ${cls}"><h4>${lbl}</h4><ol>${qs.map(q=>`<li>${q.prompt}</li>`).join('')}</ol></div>`;
-        }).join('')}</div>
-        <div class="word-section">
-          <h4>🌍 Real-life word problems (all students)</h4>
-          <div class="word-list">${(l.wordProblems||[]).map((w,i)=>`
-            <div class="word-item"><span class="n">${i+1}</span><span>${w.prompt}</span></div>`).join('')}</div>
+        <div class="practice-notebook">
+          <h4>Notebook practice</h4>
+          <ol>${pr.primary.map(q=>`<li>${q.prompt}</li>`).join('')}</ol>
         </div>
+        ${pr.soaker?`<div class="soaker"><b>SOAKER</b>${pr.soaker}</div>`:''}
+        ${pr.words?.length?`<div class="word-mini">
+          <h4>🌍 Word problems (stretch)</h4>
+          <div class="word-list">${pr.words.map((w,i)=>`<div class="word-item"><span class="n">${i+1}</span><span>${w.prompt}</span></div>`).join('')}</div>
+        </div>`:''}
       </div>`;
   }
+  else if(phase==='exit'){
+    html = `${toplineHtml('exit','Check for understanding')}
+      <h1 class="title">Exit ticket</h1>
+      <p class="sub">Quick check before you go. On a slip or in your book — press <kbd>R</kbd> to reveal answers.</p>
+      <div class="exit-grid">${f.exit.map((q,i)=>`
+        <div class="exit-card"><span class="en">${i+1}</span><div class="eq">${q.prompt}</div></div>`).join('')}</div>`;
+  }
 
-  html += `<div class="screenlbl">Week ${l.week} · L${l.lesson} · ${phaseLabels[phase]}</div>
-    <div class="corner"><kbd>←</kbd><kbd>→</kbd> slides · crosses lessons · <kbd>T</kbd> notes · <kbd>F</kbd> present</div>`;
+  const revealText = f.reveal[phase] || '';
+  if(revealText){
+    html += `<div class="answer-drawer"><div class="answer-kicker">${esc(phaseLabels[phase])} · answer</div><div class="answer-content">${esc(revealText)}</div></div>`;
+  }
+
+  html += `<div class="screenlbl">Week ${l.week} · L${l.lesson} · ${phaseLabels[phase]}${min?` · ~${min}m`:''}</div>
+    <div class="corner"><kbd>←</kbd><kbd>→</kbd> slides · <kbd>R</kbd> reveal · <kbd>T</kbd> notes · <kbd>F</kbd> present</div>`;
   el.innerHTML = html;
+  const rb = document.getElementById('revealBtn');
+  rb.hidden = !revealText;
+  rb.classList.remove('primary');
   updateNav();
   fillNotes(l, phase);
+}
+
+function toggleReveal(){
+  if(mode!=='lesson') return;
+  const el = document.getElementById('slide');
+  if(!el || !el.querySelector('.answer-drawer')) return;
+  const open = el.classList.toggle('answer-open');
+  document.getElementById('revealBtn').classList.toggle('primary', open);
 }
 
 function updateNav(){
@@ -778,9 +987,17 @@ function fillNotes(l, phase){
   // Answers first so they're visible without scrolling past phase tips
   html += answerKeyHtml(l);
 
-  const n = l.notes && l.notes[phase];
+  // Map new Gradual Release phases back onto legacy note keys.
+  const NOTE_FALLBACK = {
+    title:['title'], hook:['hook'], retrieval:['retrieval','diagnostic'],
+    intention:['intention'], teach:['teach','concept'], annotate:['annotate','solution'],
+    wedo:['wedo'], practice:['practice'], exit:['exit','exitTicket']
+  };
+  const keys = NOTE_FALLBACK[phase] || [phase];
+  let n = null;
+  for(const k of keys){ if(l.notes && l.notes[k]){ n = l.notes[k]; break; } }
   if(n) html += `<div class="phase-notes"><h4>Teaching notes</h4>${n}</div>`;
-  if(phase==='diagnostic' && l.notes?.placement){
+  if(phase==='retrieval' && l.notes?.placement){
     html += `<h4>Placement guide</h4>${l.notes.placement}`;
   }
   body.innerHTML = html;
@@ -870,6 +1087,7 @@ document.getElementById('notesBtn').onclick = ()=>{
   else openNotes();
 };
 document.getElementById('notesClose').onclick = closeNotes;
+document.getElementById('revealBtn').onclick = toggleReveal;
 document.getElementById('presentBtn').onclick = togglePresent;
 document.getElementById('assessBtn').onclick = toggleAssessTask;
 document.getElementById('assessClose').onclick = closeAssessOverlay;
@@ -880,10 +1098,15 @@ document.addEventListener('fullscreenchange', ()=>{
   updatePresentScale();
 });
 document.addEventListener('keydown', e=>{
-  if(e.key==='Escape'){ closeAssessOverlay(); closeNotes(); exitPresent(); return; }
+  if(e.key==='Escape'){
+    const s = document.getElementById('slide');
+    if(s?.classList.contains('answer-open')){ s.classList.remove('answer-open'); document.getElementById('revealBtn').classList.remove('primary'); }
+    closeAssessOverlay(); closeNotes(); exitPresent(); return;
+  }
   if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT'||e.target.tagName==='TEXTAREA') return;
   if(e.key==='f'||e.key==='F'){ e.preventDefault(); togglePresent(); return; }
   if(e.key==='t'||e.key==='T'){ e.preventDefault(); document.getElementById('notesBtn').click(); return; }
+  if(e.key==='r'||e.key==='R'){ e.preventDefault(); toggleReveal(); return; }
   if(e.key==='a'||e.key==='A'){
     const l = getLesson(lessonId);
     if(mode==='lesson' && isAssessmentLesson(l)){ e.preventDefault(); toggleAssessTask(); return; }

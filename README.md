@@ -11,16 +11,21 @@ python3 -m http.server 8080
 
 Open http://localhost:8080 → pick a lesson → press **F** (Present).
 
-## Lesson flow (~45 min teaching)
+## Lesson flow (~50 min teaching · Gradual Release)
 
-| Slide | What happens |
-|-------|----------------|
-| **Title** | Focus + pacing guide |
-| **Diagnostic** | All 3 scaled problems on **one screen** — kids work on paper, you observe |
-| **Hook** | Engaging real-life problem |
-| **Solution** | Work through the hook together |
-| **Concept** | Teach the maths |
-| **Practice** | 3 tiers side-by-side + **3 word problems** for everyone |
+| Slide | Mode | What happens |
+|-------|------|----------------|
+| **Title** | — | Focus + Gradual Release overview |
+| **Hook** | TALK | Engaging real-life problem |
+| **Retrieval** | TEAMS | Quick warm-up recall (answers via **R**) |
+| **Learning intention** | WATCH | WALT + success criteria |
+| **Explicit teaching** | WATCH | I do — concept + worked example |
+| **Live annotation** | NOTEBOOK | Model on the board (from hook solution) |
+| **We do** | TALK | Guided practice together (**R** reveals) |
+| **Independent practice** | NOTEBOOK | Calm primary set + soaker + stretch word problems |
+| **Exit ticket** | NOTEBOOK | Quick check (**R** reveals) |
+
+Legacy fields in `lessons.js` (`diagnostic`, `hook`, `hookSolution`, `concept`, `practice`, `wordProblems`) are mapped automatically. You can also author explicit `retrieval`, `intention`, `teach`, `annotate`, `wedo`, `soaker`, and `exit` / `exitTicket` when you want tighter control.
 
 **Assessment lessons** (Week 3 L3–L4, Week 7 L1–L4) use a shorter 3-slide flow: **Overview → This session → Official task**.
 
@@ -28,6 +33,7 @@ Open http://localhost:8080 → pick a lesson → press **F** (Present).
 
 - **← →** or **Space** — next/prev slide; at the last/first slide, jumps to the next/previous lesson
 - **F** — Present mode (scale slide for screen share)
+- **R** — Reveal answers (retrieval / we do / practice / exit)
 - **T** — Teacher notes panel (answers + placement tips)
 - **A** — Open assessment task (Week 3 & 7 lessons)
 - **Esc** — Exit notes / present / task panel
@@ -71,11 +77,13 @@ See **`IMAGE-SHOPPING-LIST.md`** for manual sourcing or swapping individual file
 
 All lesson data lives in `lessons.js` — each ready lesson needs:
 
-- `diagnostic` (3 problems)
-- `hook` + `hookSolution`
-- `concept`
-- `practice` { 1, 2, 3 } — 4 drills per tier
-- `wordProblems` — 3 real-life problems
+- `diagnostic` (3 problems) — also feeds retrieval if `retrieval` is omitted
+- `hook` + `hookSolution` — hookSolution also feeds live annotation
+- `concept` — feeds explicit teaching if `teach` is omitted
+- `practice` { 1, 2, 3 } — primary independent set + we-do / exit sources
+- `wordProblems` — soaker + stretch
 - `notes` — per-slide teacher notes
 - `pacing` — suggested minutes per phase
 - `hero` — `{ src, alt, caption, diagram? }` for title slide image
+
+Optional Gradual Release overrides: `retrieval`, `intention`, `teach`, `annotate`, `wedo`, `soaker`, `exit` / `exitTicket`.
