@@ -127,6 +127,23 @@
   .exit-card{border-radius:16px;padding:20px 22px;background:rgba(126,217,154,.1);border:2px solid rgba(126,217,154,.35);display:flex;flex-direction:column;gap:12px;min-height:0;}
   .exit-card .en{width:32px;height:32px;border-radius:50%;background:rgba(126,217,154,.3);color:var(--t1);font-weight:900;display:grid;place-items:center;font-size:16px;}
   .exit-card .eq{font-size:clamp(18px,1.8vw,24px);font-weight:700;line-height:1.3;}
+  /* Explicit teaching — two portrait annotate boards */
+  .teach-panels{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0;}
+  .teach-board{display:flex;flex-direction:column;min-height:0;border-radius:18px;background:#fff;color:#1e1a24;box-shadow:0 10px 28px rgba(12,8,24,.22);overflow:hidden;border:1px solid rgba(255,255,255,.2);}
+  .teach-board .tb-head{flex:none;padding:14px 16px 12px;border-bottom:1px solid rgba(30,26,36,.08);}
+  .teach-board .tb-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#8a7a5a;margin-bottom:6px;}
+  .teach-board .tb-lead{font-size:clamp(16px,1.55vw,20px);font-weight:700;line-height:1.35;color:#1e1a24;}
+  .teach-board .tb-lead p{margin:0 0 8px;}
+  .teach-board .tb-lead p:last-child{margin-bottom:0;}
+  .teach-board .tb-copy{font-size:clamp(15px,1.45vw,18px);font-weight:650;line-height:1.4;color:#2a2018;}
+  .teach-board .tb-copy p{margin:0 0 6px;}
+  .teach-board .tb-copy p:last-child{margin-bottom:0;}
+  .teach-board .tb-tip{margin-top:8px;padding:8px 10px;border-radius:10px;background:#fff4d6;border-left:3px solid #e8a838;font-size:clamp(13px,1.2vw,15px);font-weight:700;line-height:1.35;color:#3d2818;}
+  .teach-board .tb-prompt{margin-top:10px;font-size:clamp(18px,1.8vw,24px);font-weight:800;line-height:1.3;color:#1e1a24;}
+  .teach-board .tb-space{flex:1;min-height:0;position:relative;background:
+    repeating-linear-gradient(transparent,transparent 31px,rgba(30,26,36,.07) 32px);
+    background-position:0 8px;}
+  .teach-board .tb-space::after{content:'Annotate here';position:absolute;left:16px;bottom:12px;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(30,26,36,.28);}
   /* answer reveal drawer */
   .answer-drawer{position:absolute;left:24px;right:24px;bottom:18px;background:#17364d;color:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 18px 40px rgba(0,0,0,.4);transform:translateY(185%);transition:transform .24s ease;z-index:9;max-height:40%;overflow:auto;border:1px solid rgba(255,255,255,.12);}
   .slide.answer-open .answer-drawer{transform:translateY(0);}
@@ -263,7 +280,7 @@
   html.presenting .practice-grid,html:fullscreen .practice-grid{flex:0 0 auto;}
   @media(max-width:800px){
     .diag-grid,.practice-grid{grid-template-columns:1fr;}
-    .retrieval-grid,.wedo-grid,.exit-grid,.intention-grid{grid-template-columns:1fr;}
+    .retrieval-grid,.wedo-grid,.exit-grid,.intention-grid,.teach-panels{grid-template-columns:1fr;}
     .title-layout,.hook-layout{grid-template-columns:1fr;}
     .hero-frame{min-height:200px;}
     .hero-frame img{min-height:200px;}
@@ -430,6 +447,162 @@ function normItems(items){
 function joinAnswers(items){
   return normItems(items).map(q => stripTags(q.answer)).filter(Boolean).join('   ·   ');
 }
+function exampleSeed(ex){
+  if(!ex) return '';
+  return String(ex).split(/\s*(?:→|->|⇒)\s*/)[0].trim();
+}
+function noteHtml(s){
+  if(!s) return '';
+  return String(s).includes('<') ? String(s) : esc(s);
+}
+function leadBlock(s){
+  if(!s) return '';
+  const html = noteHtml(s);
+  return /<p[\s>]/i.test(html) ? html : `<p>${html}</p>`;
+}
+/* Two portrait boards: 1–2 lead sentences on top, blank annotate space below. */
+function splitTeachPanels(t){
+  const body = (t.body || []).filter(Boolean);
+  const tipHtml = t.notice ? noteHtml(t.notice) : '';
+  const seed = exampleSeed(t.example);
+  const heading = stripTags(t.heading || 'today’s skill');
+  const authored = t.panelLeads || {};
+
+  // Left: up to two well-worded method sentences (from body, or authored override)
+  let leftLead;
+  if(authored.left){
+    leftLead = leadBlock(authored.left);
+  } else if(body.length){
+    leftLead = body.slice(0, 2).map(p => `<p>${p}</p>`).join('');
+  } else {
+    leftLead = `<p>Here’s how <b>${esc(heading)}</b> works. Annotate the steps in the space below as you explain.</p>`;
+  }
+
+  // Right: two short modelling sentences + example seed
+  let rightLead;
+  if(authored.right){
+    rightLead = leadBlock(authored.right);
+  } else if(seed){
+    rightLead = `<p>Watch one clear example of <b>${esc(heading)}</b>.</p><p>Think aloud — annotate each step below, then decide and check.</p>`;
+  } else {
+    rightLead = `<p>Model one clear example of <b>${esc(heading)}</b> together.</p><p>Think aloud as you annotate each step in the space below.</p>`;
+  }
+
+  return {
+    left: { kicker: 'The idea', lead: leftLead, tip: tipHtml },
+    right: {
+      kicker: 'Model it',
+      lead: rightLead,
+      prompt: seed ? esc(stripTags(seed)) : '',
+      tip: ''
+    }
+  };
+}
+/* Rich phase notes when authored tips are thin one-liners. */
+function authorPhaseNote(l, phase){
+  const NOTE_FALLBACK = {
+    title:['title'], hook:['hook'], retrieval:['retrieval','diagnostic'],
+    intention:['intention'], teach:['teach','concept'], annotate:['annotate','solution'],
+    wedo:['wedo'], practice:['practice'], exit:['exit','exitTicket']
+  };
+  const keys = NOTE_FALLBACK[phase] || [phase];
+  for(const k of keys){ if(l.notes && l.notes[k]) return l.notes[k]; }
+  return '';
+}
+function phaseTeachNotesHtml(l, phase){
+  const f = buildTeachFlow(l);
+  let auto = '';
+
+  if(phase === 'hook'){
+    const hk = f.hook || {};
+    auto += l.focus ? `<p><b>Focus:</b> ${esc(l.focus)}</p>` : '';
+    auto += `<p><b>Do:</b> Read the problem once. Give 30–60s think time, then turn-and-talk. Do <i>not</i> solve it yet — collect strategies and language.</p>`;
+    if(hk.context) auto += `<p><b>Context:</b> ${noteHtml(hk.context)}</p>`;
+  }
+  else if(phase === 'retrieval'){
+    auto += `<p><b>Purpose:</b> Wake up prior knowledge — fast, low-stakes recall before new learning.</p>`;
+    auto += `<p><b>Do:</b> Mini-whiteboards or teams (~4 min). Circulate for misconceptions. Reveal with <kbd>R</kbd> only after most have attempted.</p>`;
+    if(f.retrieval?.length){
+      auto += `<p><b>Listen for:</b></p><ul>${f.retrieval.map(q =>
+        `<li>${noteHtml(q.prompt)} <span style="color:var(--gold2)">→ ${esc(stripTags(q.answer))}</span></li>`
+      ).join('')}</ul>`;
+    }
+  }
+  else if(phase === 'intention'){
+    const it = f.intention;
+    auto += `<p><b>We are learning to:</b> ${noteHtml(it.learning)}</p>`;
+    auto += `<p><b>Success looks like:</b></p><ul>${(it.success||[]).map(s=>`<li>${noteHtml(s)}</li>`).join('')}</ul>`;
+    if(it.vocab?.length) auto += `<p><b>Vocabulary to hear/use:</b> ${it.vocab.map(v=>esc(v)).join(' · ')}</p>`;
+    auto += `<p><b>Do:</b> Read WALT once. Ask one student to rephrase success criteria in their own words.</p>`;
+  }
+  else if(phase === 'teach'){
+    const t = f.teach;
+    auto += l.focus ? `<p><b>Focus:</b> ${esc(l.focus)}</p>` : '';
+    auto += `<p><b>Teach through (I do):</b> Keep the left board as the “idea”. Annotate the blank space as you explain — don’t just read the bullets.</p>`;
+    if(t.body?.length){
+      auto += `<p><b>Talk track:</b></p><ol>${t.body.map(b=>`<li>${b}</li>`).join('')}</ol>`;
+    }
+    if(t.notice) auto += `<p><b>Watch out / notice:</b> ${noteHtml(t.notice)}</p>`;
+    if(t.example){
+      const seed = exampleSeed(t.example);
+      auto += `<p><b>Model prompt on the board:</b> ${esc(stripTags(seed || t.example))}</p>`;
+      auto += `<p><b>Full worked example (reveal with R):</b> ${esc(stripTags(t.example))}</p>`;
+      auto += `<p><b>Say:</b> “Watch my thinking. I’ll line them up / break them apart, decide, then check.” Pause after each step for a choral repeat.</p>`;
+    }
+    auto += `<p><b>CFU:</b> Ask “How do you know?” Get at least two student explanations before moving on.</p>`;
+  }
+  else if(phase === 'annotate'){
+    const a = f.annotate;
+    auto += `<p><b>Purpose:</b> Live model of today’s strategy on the hook problem — students copy the structure into notebooks.</p>`;
+    if(a.prompt) auto += `<p><b>Prompt:</b> ${noteHtml(a.prompt)}</p>`;
+    if(a.steps?.length){
+      auto += `<p><b>Step-by-step script:</b></p><ol>${a.steps.map(s=>`<li>${s}</li>`).join('')}</ol>`;
+    }
+    if(a.answer) auto += `<p><b>Final answer:</b> ${esc(stripTags(a.answer))}</p>`;
+    auto += `<p><b>Do:</b> Narrate decisions (“Why this step?”). Leave one deliberate pause for students to predict the next move.</p>`;
+  }
+  else if(phase === 'wedo'){
+    auto += `<p><b>Purpose:</b> Guided practice — you still steer, students do more of the talking.</p>`;
+    auto += `<p><b>Do:</b> One question at a time. Hands / mini-whiteboards. Cold-call explanations. Reveal with <kbd>R</kbd> after each or at the end.</p>`;
+    if(f.wedo?.length){
+      auto += `<p><b>Items + answers:</b></p><ul>${f.wedo.map(q =>
+        `<li>${noteHtml(q.prompt)} <span style="color:var(--gold2)">→ ${esc(stripTags(q.answer))}</span></li>`
+      ).join('')}</ul>`;
+    }
+  }
+  else if(phase === 'practice'){
+    const pr = f.practice;
+    auto += `<p><b>Purpose:</b> Quiet independent practice of today’s strategy.</p>`;
+    auto += `<p><b>Do:</b> Students work in notebooks showing every step. Circulate for the same misconception from retrieval/teach. Fast finishers → soaker, then stretch word problems.</p>`;
+    if(pr?.primary?.length){
+      auto += `<p><b>Primary set (Tier ${pr.tier}) answers:</b></p>${qaList(pr.primary)}`;
+    }
+    if(pr?.soaker) auto += `<p><b>Soaker:</b> ${esc(stripTags(pr.soaker))}</p>`;
+  }
+  else if(phase === 'exit'){
+    auto += `<p><b>Purpose:</b> Quick check — did today’s teaching stick?</p>`;
+    auto += `<p><b>Do:</b> Slip or last two lines in books (~5 min). Mark cold or scan for the lesson’s watch-out. Use results to regroup tomorrow.</p>`;
+    if(f.exit?.length){
+      auto += `<p><b>Exit items + answers:</b></p><ul>${f.exit.map(q =>
+        `<li>${noteHtml(q.prompt)} <span style="color:var(--gold2)">→ ${esc(stripTags(q.answer))}</span></li>`
+      ).join('')}</ul>`;
+    }
+  }
+  else if(phase === 'title'){
+    auto += l.focus ? `<p><b>Focus:</b> ${esc(l.focus)}</p>` : '';
+    auto += `<p><b>Flow today:</b> Hook → Retrieval → Intention → Teach → Annotate → We do → Practice → Exit (~50 min).</p>`;
+    auto += `<p><b>Materials:</b> mini-whiteboards, notebooks, and any manipulatives named in the hook.</p>`;
+  }
+
+  const author = authorPhaseNote(l, phase);
+  let html = '';
+  if(auto) html += `<div class="phase-notes"><h4>How to teach this slide</h4>${auto}</div>`;
+  if(author) html += `<div class="phase-notes"><h4>Board tip</h4>${author}</div>`;
+  if(phase === 'retrieval' && l.notes?.placement){
+    html += `<h4>Placement guide</h4>${l.notes.placement}`;
+  }
+  return html;
+}
 function buildTeachFlow(l){
   const tiers = diagTiers(l);                 // [t1, t2, t3]
   const p = l.practice || {};
@@ -491,6 +664,7 @@ function buildTeachFlow(l){
 
   const reveal = {
     retrieval: joinAnswers(retrieval),
+    teach: teach.example ? stripTags(teach.example) : '',
     annotate: annotate.answer ? stripTags(annotate.answer) : '',
     wedo: joinAnswers(wedo),
     practice: joinAnswers(primary),
@@ -851,14 +1025,28 @@ function renderSlide(){
   }
   else if(phase==='teach'){
     const t = f.teach;
+    const panels = splitTeachPanels(t);
     html = `${toplineHtml('teach','Explicit teaching · I do')}
       <h1 class="title">${esc(t.heading||l.title)}</h1>
-      <div class="body-scroll">
-        <div class="card cream">
-          ${(t.body||[]).map(p=>`<p style="margin-bottom:8px">${p}</p>`).join('')}
-          ${t.notice?`<div class="notice"><b>Notice:</b> ${esc(t.notice)}</div>`:''}
+      <p class="sub" style="margin-bottom:8px">Short idea up top — annotate the white space as you teach. Press <kbd>R</kbd> for the worked example.</p>
+      <div class="teach-panels">
+        <div class="teach-board">
+          <div class="tb-head">
+            <div class="tb-kicker">${esc(panels.left.kicker)}</div>
+            <div class="tb-lead">${panels.left.lead}</div>
+            ${panels.left.tip?`<div class="tb-tip">${panels.left.tip}</div>`:''}
+          </div>
+          <div class="tb-space" aria-hidden="true"></div>
         </div>
-        ${t.example?`<div class="card dark" style="margin-top:10px"><h3>Worked example</h3><p style="margin-top:8px;line-height:1.45">${t.example}</p></div>`:''}
+        <div class="teach-board">
+          <div class="tb-head">
+            <div class="tb-kicker">${esc(panels.right.kicker)}</div>
+            <div class="tb-lead">${panels.right.lead}</div>
+            ${panels.right.prompt?`<div class="tb-prompt">${panels.right.prompt}</div>`:''}
+            ${panels.right.tip?`<div class="tb-tip">${panels.right.tip}</div>`:''}
+          </div>
+          <div class="tb-space" aria-hidden="true"></div>
+        </div>
       </div>`;
   }
   else if(phase==='annotate'){
@@ -986,20 +1174,7 @@ function fillNotes(l, phase){
 
   // Answers first so they're visible without scrolling past phase tips
   html += answerKeyHtml(l);
-
-  // Map new Gradual Release phases back onto legacy note keys.
-  const NOTE_FALLBACK = {
-    title:['title'], hook:['hook'], retrieval:['retrieval','diagnostic'],
-    intention:['intention'], teach:['teach','concept'], annotate:['annotate','solution'],
-    wedo:['wedo'], practice:['practice'], exit:['exit','exitTicket']
-  };
-  const keys = NOTE_FALLBACK[phase] || [phase];
-  let n = null;
-  for(const k of keys){ if(l.notes && l.notes[k]){ n = l.notes[k]; break; } }
-  if(n) html += `<div class="phase-notes"><h4>Teaching notes</h4>${n}</div>`;
-  if(phase==='retrieval' && l.notes?.placement){
-    html += `<h4>Placement guide</h4>${l.notes.placement}`;
-  }
+  html += phaseTeachNotesHtml(l, phase);
   body.innerHTML = html;
 }
 
