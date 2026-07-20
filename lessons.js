@@ -6,7 +6,8 @@ const LESSONS = [
     id:'w1-l1', week:1, lesson:1, code:'19.3', ready:true,
     title:'Comparing and ordering fractions',
     subtitle:'Fractions strand',
-    focus:'Compare and order fractions using benchmarks and common denominators.',
+    focus:'compare fractions and put them in order — and say how we know.',
+    hot:'Mia says <b>3/8</b> is bigger than <b>3/6</b> because 8 is bigger than 6. Is she right? Draw or explain to prove it.',
     hero:{ src:'images/w1-l1-pizza-night.jpg', alt:'Two pizzas cut into different numbers of slices', caption:'Pizza night — who ate more?' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -41,7 +42,7 @@ const LESSONS = [
     },
     hook:{
       title:'Pizza night!',
-      problem:'Two pizzas, same size. <b>Pizza A</b> is cut into <b>8</b> slices. <b>Pizza B</b> is cut into <b>6</b> slices. Jake eats <b>3</b> slices from Pizza A. Mia eats <b>3</b> slices from Pizza B. Who ate more pizza? How do you know?',
+      problem:'Two pizzas, same size. <b>Pizza A</b> is cut into <b>8</b> slices. <b>Pizza B</b> is cut into <b>6</b> slices. Jake eats <b>3</b> from A. Mia eats <b>3</b> from B.<br><b>Who ate more?</b> How do you know?',
       context:'Let students draw both pizzas. No calculators — convince a partner.'
     },
     hookSolution:{
@@ -61,7 +62,7 @@ const LESSONS = [
         'Use <b>1/2</b> as a benchmark: is the fraction less than, equal to, or more than half?',
         'Different denominators? Use <b>equivalent fractions</b> or a number line to order.'
       ],
-      notice:'Always explain <b>why</b> one fraction is larger — reasoning matters.',
+      notice:'Always say <b>why</b> one fraction is larger — show your thinking.',
       example:'2/3 vs 3/4 → 8/12 vs 9/12 → 3/4 is larger'
     },
     practice:{
@@ -103,7 +104,8 @@ const LESSONS = [
     id:'w1-l2', week:1, lesson:2, code:'20.1', ready:true,
     title:'Adding and subtracting fractions',
     subtitle:'Same and related denominators',
-    focus:'Add and subtract with same and related denominators.',
+    focus:'add and subtract fractions that have the same (or matching) bottom numbers.',
+    hot:'Can you invent two fractions that add to <b>1</b> but have different denominators? Show your working.',
     hero:{ src:'images/w1-l2-pancake-stack.jpg', alt:'Stack of pancakes with measuring cups of batter', caption:'The pancake stack' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -198,7 +200,8 @@ const LESSONS = [
     id:'w1-l3', week:1, lesson:3, code:'20.3', ready:true,
     title:'Adding and subtracting fractions',
     subtitle:'Practice & application',
-    focus:'Apply fraction operations in stories and mixed practice.',
+    focus:'use fraction add and subtract in real stories.',
+    hot:'Change one number in today’s story so the answer gets bigger. What did you change, and why did it work?',
     hero:{ src:'images/w1-l3-fun-run.jpg', alt:'Students running a school fun run on a track', caption:'The fun-run fractions' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -291,7 +294,8 @@ const LESSONS = [
     id:'w1-l4', week:1, lesson:4, code:'—', ready:true,
     title:'Revision and catch-up',
     subtitle:'Week 1 consolidation',
-    focus:'Review compare, order, add and subtract fractions.',
+    focus:'practise comparing, ordering, adding and subtracting fractions.',
+    hot:'Which is harder: comparing fractions or adding them? Give one example that shows your idea.',
     hero:{ src:'images/w1-l4-brownie-bakeoff.jpg', alt:'Brownies cut into equal pieces on a baking tray', caption:'Brownie bake-off' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -387,7 +391,8 @@ const LESSONS = [
     id:'w2-l1', week:2, lesson:1, code:'20.2', ready:true,
     title:'Equivalent fractions',
     subtitle:'Same amount, different names',
-    focus:'Find and use equivalent fractions to compare, add and simplify.',
+    focus:'find matching fractions (same amount, different look) and use them to compare or simplify.',
+    hot:'Find three different fractions equal to <b>1/2</b>. How do you know they’re the same amount?',
     hero:{ src:'images/w2-l1-equivalent-fractions.jpg', alt:'Fraction wall or pizza slices showing equivalent fractions', caption:'Same amount, different names' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -483,7 +488,8 @@ const LESSONS = [
     id:'w2-l2', week:2, lesson:2, code:'21.1', ready:true,
     title:'Mixed numerals and improper fractions',
     subtitle:'Wholes and parts',
-    focus:'Convert between mixed numerals and improper fractions.',
+    focus:'swap between mixed numbers (like 2 1/2) and top-heavy fractions (like 5/2).',
+    hot:'A friend writes <b>9/4</b> as <b>1 5/4</b>. Spot the mistake and fix it. Explain the fix.',
     hero:{ src:'images/w2-l2-mixed-numerals.jpg', alt:'Measuring cups showing whole cups plus a part cup', caption:'Wholes and parts' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -518,7 +524,7 @@ const LESSONS = [
     },
     hook:{
       title:'Measuring cup maths',
-      problem:'A recipe needs <b>2 3/4</b> cups of milk. You only have a <b>1/4-cup</b> measure. How many quarter-cups do you need to pour? How would you write that as a single fraction?',
+      problem:'A recipe needs <b>2 3/4</b> cups of milk. You only have a <b>1/4-cup</b> measure.<br>How many quarter-cups do you need? How can you write that as <b>one</b> fraction?',
       context:'Kitchen context — count the quarters including the full cups.'
     },
     hookSolution:{
@@ -578,7 +584,8 @@ const LESSONS = [
     id:'w2-l3', week:2, lesson:3, code:'7.2', ready:true,
     title:'Place value to thousandths',
     subtitle:'Decimals strand',
-    focus:'Read, write and understand decimal place value to thousandths.',
+    focus:'read and write decimals out to thousandths (the third digit after the point).',
+    hot:'Why can <b>0.40</b> and <b>0.4</b> be the same value? Prove it with a place-value chart.',
     hero:{ src:'images/w2-l3-place-value-thousandths.jpg', alt:'Digital stopwatch showing precise time to hundredths of a second', caption:'Olympic finish — every digit counts', diagram:false },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -674,7 +681,8 @@ const LESSONS = [
     id:'w2-l4', week:2, lesson:4, code:'21.2', ready:true,
     title:'Comparing decimals',
     subtitle:'Which is larger?',
-    focus:'Compare and order decimals using place value.',
+    focus:'compare decimals by looking carefully at each place value.',
+    hot:'Make up two petrol prices that look close. Which is cheaper — and which digit decided it?',
     hero:{ src:'images/w2-l4-comparing-decimals.jpg', alt:'Swimming race times or petrol price signs with decimals', caption:'Which is larger?' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -770,7 +778,8 @@ const LESSONS = [
     id:'w3-l1', week:3, lesson:1, code:'—', ready:true,
     title:'Decimals (include percentages)',
     subtitle:'Fractions, decimals and %',
-    focus:'Connect fractions, decimals and percentages; find simple percentages of amounts.',
+    focus:'link fractions, decimals and percentages, and find easy percentages of amounts.',
+    hot:'Is <b>50% off</b> always a good deal? Invent a price example where it might not be.',
     hero:{ src:'images/w3-l1-decimals-percentages.jpg', alt:'Shop sale sign showing 50 percent off', caption:'Decimals in the real world' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -865,7 +874,8 @@ const LESSONS = [
     id:'w3-l2', week:3, lesson:2, code:'—', ready:true,
     title:'Revision on decimals and fractions',
     subtitle:'SA5 readiness',
-    focus:'Review representing, comparing and ordering fractions and decimals before SA5.',
+    focus:'practise showing, comparing and ordering fractions and decimals.',
+    hot:'Put <b>3/5</b>, <b>0.55</b> and <b>60%</b> in order. Explain your method without a calculator.',
     hero:{ src:'images/w3-l2-decimals-fractions-revision.jpg', alt:'Teacher explaining maths on a chalkboard with numbers', caption:'Fractions & decimals revision', diagram:false },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -967,7 +977,8 @@ const LESSONS = [
     id:'w4-l1', week:4, lesson:1, code:'7.1', ready:true,
     title:'Multiplication using split',
     subtitle:'Term 2 review · Mental strategies',
-    focus:'Use the split strategy to multiply mentally.',
+    focus:'multiply in our heads by splitting numbers into friendly parts.',
+    hot:'Show <b>24 × 15</b> two different ways (split / other). Which way felt clearer — and why?',
     hero:{ src:'images/w4-l1-multiplication-split.jpg', alt:'Mental maths split strategy shown with numbers broken apart', caption:'Split and multiply', diagram:true },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1003,7 +1014,7 @@ const LESSONS = [
     hook:{
       title:'Concert ticket rush',
       problem:'Tickets cost <b>$15</b> each. A group wants <b>6</b> tickets. How could you split <b>15</b> to multiply in your head? What is the total cost?',
-      context:'No written algorithm yet — talk through a mental strategy.'
+      context:'No written method yet — talk through a mental strategy.'
     },
     hookSolution:{
       heading:'Split 15, multiply, add back',
@@ -1061,8 +1072,9 @@ const LESSONS = [
   {
     id:'w4-l2', week:4, lesson:2, code:'24.2', ready:true,
     title:'Multiplication 4 digit × 1 digit',
-    subtitle:'Written algorithm',
-    focus:'Multiply a 4-digit number by a 1-digit number using a written strategy.',
+    subtitle:'Written method',
+    focus:'multiply a big number by a single digit using a clear written method.',
+    hot:'What mistake happens if you forget to regroup when multiplying? Invent a wrong working and fix it.',
     hero:{ src:'images/w4-l2-4x1-multiplication.jpg', alt:'Rows of stadium seats or ticket stacks showing large groups', caption:'Big numbers, one-digit multiplier' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1156,7 +1168,8 @@ const LESSONS = [
     id:'w4-l3', week:4, lesson:3, code:'24.3', ready:true,
     title:'Multiplication by tens and hundreds',
     subtitle:'Place-value patterns',
-    focus:'Multiply by 10, 100 and multiples using place-value understanding.',
+    focus:'multiply by 10 and 100 by shifting digits on the place-value chart.',
+    hot:'If digits shift for ×10 and ×100, what happens for ×1000? Predict, then check with an example.',
     hero:{ src:'images/w4-l3-multiply-tens-hundreds.jpg', alt:'Bundles of ten or hundred items like pencils or coins', caption:'×10 and ×100' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1191,7 +1204,7 @@ const LESSONS = [
     },
     hook:{
       title:'Pencil order',
-      problem:'A school orders <b>24</b> boxes of pencils. Each box has <b>10</b> pencils. Later they order <b>24</b> boxes of <b>100</b> coloured pencils for art. How many of each? What pattern do you notice when you multiply by 10 or 100?',
+      problem:'A school orders <b>24</b> boxes of <b>10</b> pencils, then <b>24</b> boxes of <b>100</b> coloured pencils.<br>How many of each? What pattern do you notice when you multiply by 10 or 100?',
       context:'Bundles of 10 and 100 — digits shift on the place value chart.'
     },
     hookSolution:{
@@ -1250,7 +1263,8 @@ const LESSONS = [
     id:'w4-l4', week:4, lesson:4, code:'25.1', ready:true,
     title:'Multiplication using the area model',
     subtitle:'Visual partial products',
-    focus:'Represent and solve multiplication using an area (array) model.',
+    focus:'show multiplication as a rectangle (area model) and use it to solve.',
+    hot:'Draw an area model for <b>23 × 14</b>. What do the four small rectangles mean?',
     hero:{ src:'images/w4-l4-area-model.jpg', alt:'Rectangular garden bed divided into a multiplication array grid', caption:'Area model', diagram:true },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1336,7 +1350,7 @@ const LESSONS = [
     notes:{
       diagnostic:'<p>Tier 3 previews Week 5 content — gauge readiness for 2-digit × 2-digit.</p>',
       hook:'<p>Colour the four regions different colours on the board grid.</p>',
-      concept:'<p>Week 4 wrap: split → written algorithm → ×10/100 → area model.</p>',
+      concept:'<p>Week 4 wrap: split → written method → ×10/100 → area model.</p>',
       practice:'<p>Encourage labelled diagrams for Tier 2/3 — not just final answers.</p>'
     }
   },
@@ -1346,7 +1360,8 @@ const LESSONS = [
     id:'w5-l1', week:5, lesson:1, code:'25.2', ready:true,
     title:'Multiplication 3 digit × 2 digit',
     subtitle:'Written & area methods',
-    focus:'Multiply a 3-digit number by a 2-digit number.',
+    focus:'multiply a 3-digit number by a 2-digit number.',
+    hot:'Would <b>203 × 45</b> be easier as an area model or a written method? Argue for one choice.',
     hero:{ src:'images/w5-l1-3x2-multiplication.jpg', alt:'Shipping boxes stacked in rows and columns', caption:'3-digit × 2-digit' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1431,7 +1446,7 @@ const LESSONS = [
     ],
     notes:{
       diagnostic:'<p>Tier 2 bridges from area model. Tier 3: watch alignment on tens row.</p>',
-      hook:'<p>Side-by-side: area grid and written algorithm for same problem.</p>',
+      hook:'<p>Side-by-side: area grid and written method for same problem.</p>',
       concept:'<p>Insist on partial products shown — not just final answer from calculator.</p>',
       practice:'<p>~8 min algorithm + ~10 min word problems.</p>'
     }
@@ -1439,8 +1454,9 @@ const LESSONS = [
   {
     id:'w5-l2', week:5, lesson:2, code:'—', ready:true,
     title:'Multiplication problems',
-    subtitle:'Stories & multi-step',
-    focus:'Solve multiplication word problems including multi-step situations.',
+    subtitle:'Stories with more than one step',
+    focus:'solve story problems that need more than one multiplication step.',
+    hot:'In the market stall story, what if lemonade costs $1 more? How does the total change — explain without restarting from scratch.',
     hero:{ src:'images/w5-l2-multiplication-problems.jpg', alt:'School market stall with price tags and quantities', caption:'Multiplication in stories' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1475,7 +1491,7 @@ const LESSONS = [
     },
     hook:{
       title:'School market stall',
-      problem:'Your class runs a market stall. You sell <b>24</b> cupcakes at <b>$3</b> each and <b>18</b> lemonades at <b>$2</b> each. How much money do you raise altogether? What if you donate <b>1/4</b> to charity — how much is that?',
+      problem:'Market stall: <b>24</b> cupcakes at <b>$3</b> each and <b>18</b> lemonades at <b>$2</b> each.<br>How much altogether? If you donate <b>1/4</b> to charity, how much is that?',
       context:'Two multiplications, then add — optional fraction step for Tier 3 discussion.'
     },
     hookSolution:{
@@ -1533,7 +1549,8 @@ const LESSONS = [
     id:'w5-l3', week:5, lesson:3, code:'25.3', ready:true,
     title:'Choosing units of measure',
     subtitle:'Term 2 review',
-    focus:'Select appropriate metric units for length, mass and capacity.',
+    focus:'choose sensible metric units for length, mass and capacity.',
+    hot:'Name something better measured in mm, something in m, and something in km. Why those units?',
     hero:{ src:'images/w5-l3-units-of-measure.jpg', alt:'Ruler beside a road distance sign showing kilometres', caption:'Right unit for the job' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1628,7 +1645,8 @@ const LESSONS = [
     id:'w5-l4', week:5, lesson:4, code:'26.1', ready:true,
     title:'Measuring length',
     subtitle:'Term 2 review · Practical',
-    focus:'Measure lengths accurately using metric units and convert between cm and m.',
+    focus:'measure length carefully and swap between centimetres and metres.',
+    hot:'A student writes 3.45 m as 3 m 45 mm. What’s wrong? How would you help them fix it?',
     hero:{ src:'images/w5-l4-measuring-length.jpg', alt:'Tape measure on a desk or long jump pit', caption:'Measure it accurately' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1663,7 +1681,7 @@ const LESSONS = [
     },
     hook:{
       title:'Long jump measure',
-      problem:'Three students measure the same long-jump pit. One reads <b>3 m 45 cm</b>. Another writes <b>345 cm</b>. A third writes <b>3.45 m</b>. Are these the same? Which format would an official results sheet use?',
+      problem:'Three students measure the same long jump: <b>3 m 45 cm</b>, <b>345 cm</b>, and <b>3.45 m</b>.<br>Are these the same? Which way would an official results sheet use?',
       context:'Sport context — accuracy, unit conversion, and recording matter.'
     },
     hookSolution:{
@@ -1724,7 +1742,8 @@ const LESSONS = [
     id:'w6-l1', week:6, lesson:1, code:'16.3', ready:true,
     title:'Division',
     subtitle:'Equal sharing & grouping',
-    focus:'Divide whole numbers using sharing and grouping strategies.',
+    focus:'divide by sharing equally or making equal groups.',
+    hot:'Same total, two divisions: grouping vs sharing. Draw both for <b>24 ÷ 6</b> and label which is which.',
     hero:{ src:'images/w6-l1-division-sharing.jpg', alt:'Party food shared equally onto plates', caption:'Fair shares' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1759,7 +1778,7 @@ const LESSONS = [
     },
     hook:{
       title:'Party platters',
-      problem:'You have <b>48</b> mini pies for a party. You put <b>6</b> pies on each platter. How many platters do you need? What if you share <b>48</b> pies equally among <b>8</b> guests — how many each?',
+      problem:'You have <b>48</b> mini pies. Put <b>6</b> on each platter — how many platters?<br>Share <b>48</b> pies equally among <b>8</b> guests — how many each?',
       context:'Same total, two division meanings — grouping vs sharing.'
     },
     hookSolution:{
@@ -1809,7 +1828,7 @@ const LESSONS = [
     ],
     notes:{
       title:'<p>Start division block — link back to multiplication facts from Weeks 4–5.</p>',
-      diagnostic:'<p>Fact fluency check. Tier 3 without written algorithm if possible.</p>',
+      diagnostic:'<p>Fact fluency check. Tier 3 without written method if possible.</p>',
       hook:'<p>Act out with counters — two questions, same 48.</p>',
       concept:'<p>Fact family triangle on board: 6, 8, 48.</p>',
       practice:'<p>Emphasise answering with units (9 students, not just 9).</p>'
@@ -1819,7 +1838,8 @@ const LESSONS = [
     id:'w6-l2', week:6, lesson:2, code:'24.1', ready:true,
     title:'Division with remainders',
     subtitle:'What is left over?',
-    focus:'Interpret and solve division problems with remainders in context.',
+    focus:'solve division stories with leftovers — and decide what the leftover means.',
+    hot:'You have 50 cupcakes and boxes of 8. Is “6 remainder 2” the same as “6.25 boxes”? When would each answer make sense?',
     hero:{ src:'images/w6-l2-division-remainders.jpg', alt:'Cupcakes with one left over after sharing', caption:'What is left over?' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1854,7 +1874,7 @@ const LESSONS = [
     },
     hook:{
       title:'Cupcake boxes',
-      problem:'You bake <b>50</b> cupcakes. Each box holds <b>8</b> cupcakes. How many <b>full</b> boxes can you pack? How many cupcakes are <b>left over</b>? Can you sell a half-full box as a “full box”?',
+      problem:'You bake <b>50</b> cupcakes. Each box holds <b>8</b>. How many <b>full</b> boxes? How many left over?<br>Can you sell a half-full box as a “full box”?',
       context:'Remainder must make sense in the story — leftover cupcakes, not “0.25 boxes”.'
     },
     hookSolution:{
@@ -1871,7 +1891,7 @@ const LESSONS = [
       heading:'Division with remainders',
       body:[
         'Divide as far as possible — the <b>remainder</b> must be less than the divisor.',
-        'Interpret the remainder: <b>left over</b>, <b>round up</b> for another group, or <b>ignore</b> — read the story.',
+        'What does the leftover mean: <b>left over</b>, <b>round up</b> for another group, or <b>ignore</b> — read the story.',
         'Check: (quotient × divisor) + remainder = original total.'
       ],
       notice:'Remainder 8 when dividing by 8 means you missed a whole group — check again!',
@@ -1913,7 +1933,8 @@ const LESSONS = [
     id:'w6-l3', week:6, lesson:3, code:'—', ready:true,
     title:'Revision',
     subtitle:'Multiplication & division',
-    focus:'Review multiplication and division strategies and word problems.',
+    focus:'practise multiplication and division strategies in story problems.',
+    hot:'Design a one-step problem that needs division with a leftover that you must round up. Explain why.',
     hero:{ src:'images/w6-l3-multiplication-division-revision.jpg', alt:'Whiteboard with mixed multiplication and division problems', caption:'× and ÷ revision' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -1964,11 +1985,11 @@ const LESSONS = [
     concept:{
       heading:'Weeks 4–6 revision',
       body:[
-        '<b>×:</b> split, written algorithm, area model, ×10/100.',
-        '<b>÷:</b> sharing, grouping, remainders — interpret in context.',
+        '<b>×:</b> split, written method, area model, ×10/100.',
+        '<b>÷:</b> sharing, grouping, remainders — decide what leftovers mean in the story.',
         'Fact families link × and ÷ — use one to check the other.'
       ],
-      notice:'SA6 next week uses calculations with data — fluency helps but isn’t the whole task.',
+      notice:'Next week’s investigation uses calculations with data — being quick helps, but clear thinking matters most.',
       example:'? × 15 = 360 → 360 ÷ 15 = 24'
     },
     practice:{
@@ -2007,7 +2028,8 @@ const LESSONS = [
     id:'w6-l4', week:6, lesson:4, code:'—', ready:true,
     title:'Revision',
     subtitle:'Problem solving · SA6 prep',
-    focus:'Multi-step problem solving across the term’s number work.',
+    focus:'solve problems that need more than one step.',
+    hot:'For the water story: which question was hardest — and what made it a multi-step problem?',
     hero:{ src:'images/w6-l4-problem-solving-revision.jpg', alt:'Students working together on a multi-step maths problem', caption:'Problem-solving revision' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2042,7 +2064,7 @@ const LESSONS = [
     },
     hook:{
       title:'Water saver challenge',
-      problem:'A family uses <b>180 L</b> of water in the shower over <b>6</b> days — the same amount each day. (1) How many litres per day? (2) If they reduce by <b>15 L</b> per day, how much in <b>4</b> days? (3) Why might this matter? <i>(Preview of SA6 “Down the drain”.)</i>',
+      problem:'A family uses <b>180 L</b> of shower water over <b>6</b> equal days.<br>(1) Litres per day? (2) If they save <b>15 L</b> per day, how much in <b>4</b> days? (3) Why might this matter?',
       context:'Multi-step + real context — mirrors SA6 investigation theme without giving answers away.'
     },
     hookSolution:{
@@ -2114,7 +2136,8 @@ const LESSONS = [
     id:'w8-l1', week:8, lesson:1, code:'6.1', ready:true,
     title:'Line graphs',
     subtitle:'Change over time',
-    focus:'Read, interpret and construct line graphs for data that changes over time.',
+    focus:'read and draw line graphs that show how something changes over time.',
+    hot:'Could you use a bar graph for the heatwave temperatures? Say yes or no — and give a reason.',
     hero:{ src:'images/w8-l1-line-graph.jpg', alt:'Line graph of daily temperature over a week', caption:'Change over time', diagram:true },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2149,7 +2172,7 @@ const LESSONS = [
     },
     hook:{
       title:'The heatwave week',
-      problem:'A line graph shows daily max temperatures: Mon <b>18°C</b>, Tue <b>22°C</b>, Wed <b>26°C</b>, Thu <b>24°C</b>, Fri <b>20°C</b>. (1) Which day was hottest? (2) Describe the trend from Wed to Fri. (3) What might cause this pattern?',
+      problem:'Daily max temperatures: Mon <b>18°C</b>, Tue <b>22°C</b>, Wed <b>26°C</b>, Thu <b>24°C</b>, Fri <b>20°C</b>.<br>(1) Hottest day? (2) What happens from Wed to Fri? (3) What might cause that pattern?',
       context:'Builds on SA6 graph work — now with formal line graph language.'
     },
     hookSolution:{
@@ -2209,7 +2232,8 @@ const LESSONS = [
     id:'w8-l2', week:8, lesson:2, code:'6.2', ready:true,
     title:'Categorical and numerical data',
     subtitle:'Sort the data',
-    focus:'Distinguish categorical and numerical data; choose appropriate displays.',
+    focus:'tell the difference between label data and number data, and pick a good graph.',
+    hot:'Sort these: shoe size, favourite colour, height in cm, number of pets. Which are label data? Which are number data?',
     hero:{ src:'images/w8-l2-categorical-data.jpg', alt:'Bar chart or pictograph of favourite sports survey', caption:'Sort the data', diagram:true },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2302,8 +2326,9 @@ const LESSONS = [
   {
     id:'w8-l3', week:8, lesson:3, code:'—', ready:true,
     title:'Data',
-    subtitle:'Collect, organise & interpret',
-    focus:'Plan data collection, record in tables and draw conclusions.',
+    subtitle:'Collect, organise & make sense of data',
+    focus:'collect data, put it in a table, and say what it shows.',
+    hot:'What new survey question would give you more useful travel-to-school information? Why?',
     hero:{ src:'images/w8-l3-data-collection.jpg', alt:'Class survey clipboard with tally marks', caption:'Collect and represent' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2338,7 +2363,7 @@ const LESSONS = [
     },
     hook:{
       title:'How we get to school',
-      problem:'Your class collects data on travel to school. After tallying: Walk <b>12</b>, Bus <b>10</b>, Car <b>6</b>. (1) How many students surveyed? (2) What fraction walk? (3) What question could you <b>not</b> answer from this data alone?',
+      problem:'Travel to school: Walk <b>12</b>, Bus <b>10</b>, Car <b>6</b>.<br>(1) How many surveyed? (2) What fraction walk? (3) What can’t this data tell you?',
       context:'Full data cycle — collect, table, interpret, spot limits.'
     },
     hookSolution:{
@@ -2397,7 +2422,8 @@ const LESSONS = [
     id:'w8-l4', week:8, lesson:4, code:'19.4', ready:true,
     title:'Finding smaller parts',
     subtitle:'Fraction of a group',
-    focus:'Find unit and non-unit fractions of a collection or quantity.',
+    focus:'find fractions of a group (like 1/4 or 3/5 of a set).',
+    hot:'You find 1/4 of 36, then 1/3 of what’s left. Invent a real-life story that matches those steps.',
     hero:{ src:'images/w8-l4-fraction-of-group.jpg', alt:'Bag of lollies with a fraction highlighted', caption:'A fraction of a group' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2493,7 +2519,8 @@ const LESSONS = [
     id:'w9-l1', week:9, lesson:1, code:'32.2', ready:true,
     title:'Nets of objects',
     subtitle:'2D → 3D',
-    focus:'Recognise and describe nets that fold to form common 3D objects.',
+    focus:'spot and describe nets that fold into 3D shapes.',
+    hot:'Can a net with only 5 faces fold into a closed box? Explain using faces.',
     hero:{ src:'images/w9-l1-nets.jpg', alt:'Cardboard box unfolded into a flat net', caption:'Fold it up!', diagram:true },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2528,7 +2555,7 @@ const LESSONS = [
     },
     hook:{
       title:'Unfold the box',
-      problem:'You flatten a cardboard box into one flat piece. It has <b>6</b> rectangles. What 3D shape will it fold back into? What if one face is missing from the net — can you still make a closed box?',
+      problem:'You flatten a cardboard box. It has <b>6</b> rectangles.<br>What 3D shape will it fold into? If one face is missing from the net, can you still make a closed box?',
       context:'Hands-on if possible — one empty tissue box or template.'
     },
     hookSolution:{
@@ -2588,7 +2615,8 @@ const LESSONS = [
     id:'w9-l2', week:9, lesson:2, code:'—', ready:true,
     title:'Nets (continued)',
     subtitle:'Prisms & pyramids',
-    focus:'Identify nets of prisms and pyramids; predict whether a net will fold correctly.',
+    focus:'decide which nets will fold into a solid — and which won’t.',
+    hot:'Design a net that looks right but will not fold. What did you deliberately get wrong?',
     hero:{ src:'images/w9-l2-nets-prisms.jpg', alt:'Nets of prisms and pyramids on a table', caption:'More nets', diagram:true },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2623,7 +2651,7 @@ const LESSONS = [
     },
     hook:{
       title:'Will it fold?',
-      problem:'Three nets are drawn on the board. Net A: cross of 6 squares. Net B: 5 squares in a row. Net C: 2 triangles attached to a strip of 3 rectangles. Which make a closed solid? What 3D shape is Net C?',
+      problem:'Three nets: <b>A</b> cross of 6 squares. <b>B</b> 5 squares in a row. <b>C</b> 2 triangles on a strip of 3 rectangles.<br>Which make a closed solid? What 3D shape is Net C?',
       context:'Predict before folding — spatial reasoning.'
     },
     hookSolution:{
@@ -2682,7 +2710,8 @@ const LESSONS = [
     id:'w9-l3', week:9, lesson:3, code:'—', ready:true,
     title:'Nets (continued)',
     subtitle:'Build & verify',
-    focus:'Draw, cut and fold nets; verify faces, edges and vertices.',
+    focus:'make a net, fold it, and check faces, edges and corners.',
+    hot:'After folding, count faces, edges and corners. Does your prism match what you predicted from the net? Explain.',
     hero:{ src:'images/w9-l3-nets-craft.jpg', alt:'Student cutting and folding a 3D net', caption:'Build the shape' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2717,7 +2746,7 @@ const LESSONS = [
     },
     hook:{
       title:'Build the prism',
-      problem:'Each team gets a net of a rectangular prism: base <b>4 cm × 3 cm</b>, height <b>5 cm</b>. (1) How many rectangles in the net? (2) What are their sizes? (3) After folding, verify: count faces, edges, vertices.',
+      problem:'Net of a rectangular prism: base <b>4 cm × 3 cm</b>, height <b>5 cm</b>.<br>(1) How many rectangles? (2) What sizes? (3) After folding, count faces, edges and corners.',
       context:'Practical lesson — measure, fold, tape, count.'
     },
     hookSolution:{
@@ -2777,7 +2806,8 @@ const LESSONS = [
     id:'w9-l4', week:9, lesson:4, code:'6.4', ready:true,
     title:'Making a table or chart',
     subtitle:'Organise & present',
-    focus:'Create clear tables and charts from collected data; choose appropriate format.',
+    focus:'make clear tables and charts from data we collect.',
+    hot:'Same sports data: would a table or a bar chart be better for finding the mode quickly? Why?',
     hero:{ src:'images/w9-l4-table-chart.jpg', alt:'Organised table and chart in a student maths book', caption:'Tables and charts', diagram:true },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2873,7 +2903,8 @@ const LESSONS = [
     id:'w10-l1', week:10, lesson:1, code:'—', ready:true,
     title:'Revision and problem solving',
     subtitle:'Term 3 revision (1)',
-    focus:'Review fractions, decimals and comparing — Term 3 strands.',
+    focus:'practise fractions, decimals and comparing from this term.',
+    hot:'Create a fraction/decimal trap for a classmate (something that looks bigger but isn’t). Explain the trick.',
     hero:{ src:'images/w10-l1-term-revision.jpg', alt:'Lightbulb moment with maths puzzle pieces', caption:'Term 3 revision' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -2926,7 +2957,7 @@ const LESSONS = [
       body:[
         '<b>Fractions:</b> compare, equivalent, add/subtract, fraction of group.',
         '<b>Decimals:</b> place value, compare, link to fractions and %.',
-        'Multi-step: convert → operate → interpret with units.'
+        'More than one step: change units → calculate → check the units make sense.'
       ],
       notice:'Week 10 spirals the term — use diagnostics to target re-teach in practice.',
       example:'2/5 = 0.4 · 75% = 0.75 = 3/4'
@@ -2967,7 +2998,8 @@ const LESSONS = [
     id:'w10-l2', week:10, lesson:2, code:'—', ready:true,
     title:'Revision and problem solving',
     subtitle:'Term 3 revision (2)',
-    focus:'Review multiplication, division and multi-step word problems.',
+    focus:'practise multiplication, division and multi-step story problems.',
+    hot:'Write a two-step money problem for a partner. Swap and solve — then mark each other’s reasoning.',
     hero:{ src:'images/w10-l2-multi-step-problems.jpg', alt:'Team of students solving a challenge on a whiteboard', caption:'Multi-step problems' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -3018,8 +3050,8 @@ const LESSONS = [
     concept:{
       heading:'× and ÷ revision',
       body:[
-        'Split, written algorithm, area model — use what fits.',
-        'Division: interpret remainders in context.',
+        'Split, written method, area model — use what fits.',
+        'Division: decide what leftovers mean in the story.',
         'Multi-step: list steps, answer one part at a time.'
       ],
       notice:'Underline what each calculation finds before computing.',
@@ -3060,7 +3092,8 @@ const LESSONS = [
     id:'w10-l3', week:10, lesson:3, code:'—', ready:true,
     title:'Revision and problem solving',
     subtitle:'Data, measure & geometry',
-    focus:'Review data displays, measurement and nets from Weeks 8–9.',
+    focus:'practise graphs, measurement and nets from recent weeks.',
+    hot:'Pick one wrong graph choice for today’s scores and explain why it would confuse people.',
     hero:{ src:'images/w10-l3-real-world-maths.jpg', alt:'Real-world maths scene: market, sport and cooking combined', caption:'Maths everywhere' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -3095,7 +3128,7 @@ const LESSONS = [
     },
     hook:{
       title:'Sports day recap',
-      problem:'Green house scored <b>94</b> points, Red <b>86</b>, Blue <b>72</b>. (1) Bar chart or line graph — which and why? (2) Winning margin? (3) Long jump: <b>3 m 45 cm</b> — write in metres. (4) Gift box is a cube — how many faces on its net?',
+      problem:'Green <b>94</b>, Red <b>86</b>, Blue <b>72</b> points.<br>(1) Bar or line graph — which and why? (2) Winning margin? (3) Long jump <b>3 m 45 cm</b> in metres? (4) Cube gift box — how many faces on its net?',
       context:'Mixed revision — data, measure, geometry in one story.'
     },
     hookSolution:{
@@ -3154,7 +3187,8 @@ const LESSONS = [
     id:'w10-l4', week:10, lesson:4, code:'—', ready:true,
     title:'Revision and problem solving',
     subtitle:'Term 3 celebration',
-    focus:'Mixed challenge problems across the term; reflect and celebrate learning.',
+    focus:'take on mixed challenge problems and celebrate what we’ve learned.',
+    hot:'What maths idea from this term are you most proud of? Give one example problem that shows it.',
     hero:{ src:'images/w10-l4-celebrate-maths.jpg', alt:'Celebratory classroom scene end of term', caption:'You’ve got this!' },
     pacing:[
       { phase:'diagnostic', min: 8 },
@@ -3209,9 +3243,9 @@ const LESSONS = [
         'Fractions & decimals: compare, convert, operate, fraction of group.',
         'Multiplication & division: strategies, remainders, word problems.',
         'Data & geometry: graphs, tables, nets, measurement.',
-        'Assessments SA5 & SA6 — represent, order, investigate, calculate.'
+        'Assessments SA5 & SA6 — show, order, investigate, calculate.'
       ],
-      notice:'Maths is problem-solving — not just answers, but reasoning and checking.',
+      notice:'Maths is problem-solving — not just answers. Explain and check.',
       example:'Pick any term problem — identify strand, strategy, check.'
     },
     practice:{

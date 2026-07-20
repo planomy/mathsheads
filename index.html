@@ -321,12 +321,12 @@
     <div class="body" id="assessPanelBody"></div>
   </div>
 </div>
-<script src="lessons.js?v=7"></script>
+<script src="lessons.js?v=8"></script>
 <script src="assessments.js?v=5"></script>
 <script>
 /* Gradual Release progression (~50 min teaching block) */
 const PHASES = ['title','hook','retrieval','intention','teach','annotate','wedo','practice','exit'];
-const PHASE_LABELS = { title:'Title', hook:'Hook', retrieval:'Retrieval', intention:'Learning intention', teach:'Explicit teaching', annotate:'Live annotation', wedo:'We do', practice:'Independent practice', exit:'Exit ticket' };
+const PHASE_LABELS = { title:'Title', hook:'Hook', retrieval:'Warm-up', intention:'Today\'s goal', teach:'Watch this', annotate:'Board work', wedo:'Together', practice:'Your turn', exit:'Exit check' };
 const MODE_BY_PHASE = { title:'', hook:'TALK', retrieval:'TEAMS', intention:'WATCH', teach:'WATCH', annotate:'NOTEBOOK', wedo:'TALK', practice:'NOTEBOOK', exit:'NOTEBOOK' };
 const MODE_CLASS = { TALK:'mode-talk', TEAMS:'mode-teams', WATCH:'mode-watch', NOTEBOOK:'mode-notebook' };
 const PHASE_TIMING = { hook:3, retrieval:4, intention:2, teach:8, annotate:8, wedo:8, practice:12, exit:5 };
@@ -387,7 +387,7 @@ function answerKeyHtml(l){
     inner += `<h4>Exit ticket</h4>${qaList(f.exit)}`;
   }
   if(f.practice?.soaker){
-    inner += `<h4>Soaker</h4><p>${esc(stripTags(f.practice.soaker))}</p>`;
+    inner += `<h4>Think harder (HOT)</h4><p>${esc(stripTags(f.practice.soaker))}</p>`;
   }
   // Full tier banks + diagnostic kept here for the teacher (not shown on the calm practice slide)
   const tiers = diagTiers(l);
@@ -509,15 +509,19 @@ function annotateBoardLead(a){
   if(first){
     return `<p>${noteHtml(prompt)}</p><p>${first}</p>`;
   }
-  return `<p>${noteHtml(prompt)}</p><p>Model each step in the space below — think aloud as you go.</p>`;
+  return `<p>${noteHtml(prompt)}</p><p>We’ll take it one step at a time in the space below.</p>`;
 }
 function wedoTeachTip(l, f){
+  /* Teacher-notes only — never put cold-call / pedagogy language on the student slide. */
   const authored = l.wedoTip || l.notes?.wedoTip || '';
   if(authored) return noteHtml(authored);
   const notice = f.teach?.notice;
   if(notice) return noteHtml(stripTags(notice));
   if(l.focus) return esc(l.focus);
   return 'Cold-call one explanation per question before you reveal with R.';
+}
+function wedoStudentTip(){
+  return 'Talk it through. Say how you know — then we check together.';
 }
 /* Rich phase notes when authored tips are thin one-liners. */
 function authorPhaseNote(l, phase){
@@ -584,6 +588,7 @@ function phaseTeachNotesHtml(l, phase){
   }
   else if(phase === 'wedo'){
     auto += `<p><b>Purpose:</b> Guided practice — you still steer, students do more of the talking.</p>`;
+    auto += `<p><b>Teacher tip:</b> ${wedoTeachTip(l, f)}</p>`;
     auto += `<p><b>Do:</b> One question at a time. Hands / mini-whiteboards. Cold-call explanations. Reveal with <kbd>R</kbd> after each or at the end.</p>`;
     if(f.wedo?.length){
       auto += `<p><b>Items + answers:</b></p><ul>${f.wedo.map(q =>
@@ -594,11 +599,11 @@ function phaseTeachNotesHtml(l, phase){
   else if(phase === 'practice'){
     const pr = f.practice;
     auto += `<p><b>Purpose:</b> Quiet independent practice of today’s strategy.</p>`;
-    auto += `<p><b>Do:</b> Students work in notebooks showing every step. Circulate for the same misconception from retrieval/teach. Fast finishers → soaker, then stretch word problems.</p>`;
+    auto += `<p><b>Do:</b> Students work in notebooks showing every step. Circulate for the same misconception from retrieval/teach. Fast finishers → Think harder, then story problems.</p>`;
     if(pr?.primary?.length){
       auto += `<p><b>Primary set (Tier ${pr.tier}) answers:</b></p>${qaList(pr.primary)}`;
     }
-    if(pr?.soaker) auto += `<p><b>Soaker:</b> ${esc(stripTags(pr.soaker))}</p>`;
+    if(pr?.soaker) auto += `<p><b>Think harder (HOT):</b> ${esc(stripTags(pr.soaker))}</p>`;
   }
   else if(phase === 'exit'){
     auto += `<p><b>Purpose:</b> Quick check — did today’s teaching stick?</p>`;
@@ -640,7 +645,7 @@ function buildTeachFlow(l){
   const intention = {
     learning: li.learning || l.focus || l.concept?.heading || l.title,
     success: (li.success && li.success.length) ? li.success
-      : [ l.focus || 'Use today’s strategy', 'Explain my thinking', 'Check with a partner' ],
+      : [ 'I can have a go at today’s idea', 'I can explain my thinking in everyday words', 'I can check my answer with a partner' ],
     vocab: li.vocab || []
   };
 
@@ -672,8 +677,10 @@ function buildTeachFlow(l){
   // Independent practice — one calm primary tier (tier 2 default) + soaker + ≤2 word problems
   const primaryTier = p[2]?.length ? 2 : (p[1]?.length ? 1 : 3);
   const primary = normItems((p[primaryTier] || []).slice(0, 4));
-  const soaker = l.soaker || l.wordProblems?.[0]?.prompt || '';
-  const words = (l.wordProblems || []).slice(l.soaker ? 0 : 1, l.soaker ? 2 : 3);
+  // Prefer authored HOT stretch (hot/soaker); else first word problem
+  const soaker = l.hot || l.soaker || l.wordProblems?.[0]?.prompt || '';
+  const hasAuthoredHot = !!(l.hot || l.soaker);
+  const words = (l.wordProblems || []).slice(hasAuthoredHot ? 0 : 1, hasAuthoredHot ? 2 : 3);
 
   // Exit ticket — explicit, else 2 items from practice tier 1 (fallback t2)
   let exit = (l.exit || l.exitTicket);
@@ -991,16 +998,16 @@ function renderSlide(){
           <h1 class="title">${esc(l.title)}</h1>
           <p class="sub">${esc(l.subtitle||'')} ${l.focus?('· '+esc(l.focus)):''}</p>
           <div class="card cream" style="margin-top:8px">
-            <h3>Gradual Release flow (~50 min teaching)</h3>
+            <h3>Today’s lesson path</h3>
             <ol style="margin:10px 0 0 20px;line-height:1.55;font-size:14.5px;color:var(--cream-ink)">
-              <li><b>Hook</b> — real-life problem (~3m · TALK)</li>
-              <li><b>Retrieval</b> — wake up your maths brain (~4m · TEAMS)</li>
-              <li><b>Learning intention</b> — WALT &amp; success criteria (~2m · WATCH)</li>
-              <li><b>Explicit teaching</b> — I do (~8m · WATCH)</li>
-              <li><b>Live annotation</b> — model on the board (~8m · NOTEBOOK)</li>
-              <li><b>We do</b> — guided practice together (~8m · TALK)</li>
-              <li><b>Independent practice</b> — notebook + soaker (~12m · NOTEBOOK)</li>
-              <li><b>Exit ticket</b> — check for understanding (~5m · NOTEBOOK)</li>
+              <li><b>Hook</b> — a real-life puzzle to talk about</li>
+              <li><b>Warm-up</b> — quick questions to wake up your maths brain</li>
+              <li><b>Today’s goal</b> — what we’re learning and how we’ll know</li>
+              <li><b>Watch this</b> — teacher shows the idea</li>
+              <li><b>Board work</b> — we solve one together on the board</li>
+              <li><b>Together</b> — a few more with the class</li>
+              <li><b>Your turn</b> — quiet notebook practice (+ a think-harder challenge)</li>
+              <li><b>Exit check</b> — a quick check before we finish</li>
             </ol>
           </div>
         </div>
@@ -1014,23 +1021,22 @@ function renderSlide(){
       <div class="hook-layout">
         ${hookImg || `<div class="hero-frame hook-img missing"></div>`}
         <div class="card hook-card" style="flex:1;display:flex;flex-direction:column;justify-content:center">
-          <p style="color:var(--ink-dim);font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">🌍 Engaging problem</p>
+          <p style="color:var(--ink-dim);font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">🌍 Real-life puzzle</p>
           <div class="hook-q">${hk.problem||''}</div>
-          ${hk.context?`<p style="color:var(--ink-dim);margin-top:12px;font-size:15px;line-height:1.45">${hk.context}</p>`:''}
         </div>
       </div>
-      <p class="sub" style="margin-top:10px">Give think time. Turn and talk — no pens down the front yet.</p>`;
+      <p class="sub" style="margin-top:10px">Think first. Then talk with a partner — no racing to the answer yet.</p>`;
   }
   else if(phase==='retrieval'){
     html = `${toplineHtml('retrieval','Wake up your maths brain')}
-      <h1 class="title">Retrieval — quick recall</h1>
-      <p class="sub">Whiteboards or teams. <b>~4 min.</b> Fast recall to warm up — press <kbd>R</kbd> to reveal answers.</p>
+      <h1 class="title">Warm-up — quick questions</h1>
+      <p class="sub">Whiteboards or teams. <b>~4 min.</b> Fast warm-up — we’ll reveal answers after you’ve had a go.</p>
       <div class="retrieval-grid">${f.retrieval.map((q,i)=>`
         <div class="retrieval-card"><span class="rn">${i+1}</span><div class="rq">${q.prompt}</div></div>`).join('')}</div>`;
   }
   else if(phase==='intention'){
     const it = f.intention;
-    html = `${toplineHtml('intention','Learning intention')}
+    html = `${toplineHtml('intention','Today\'s goal')}
       <h1 class="title">What we're learning today</h1>
       <div class="intention-grid">
         <div class="card cream">
@@ -1039,7 +1045,7 @@ function renderSlide(){
           ${it.vocab?.length?`<div class="vocab-chips">${it.vocab.map(v=>`<span>${esc(v)}</span>`).join('')}</div>`:''}
         </div>
         <div class="card dark">
-          <h3>Success criteria</h3>
+          <h3>I’ll know I’m getting it when…</h3>
           <ul class="success-list">${(it.success||[]).map(s=>`<li>${s}</li>`).join('')}</ul>
         </div>
       </div>`;
@@ -1047,9 +1053,9 @@ function renderSlide(){
   else if(phase==='teach'){
     const t = f.teach;
     const panels = splitTeachPanels(t);
-    html = `${toplineHtml('teach','Explicit teaching · I do')}
+    html = `${toplineHtml('teach','Watch this')}
       <h1 class="title">${esc(t.heading||l.title)}</h1>
-      <p class="sub" style="margin-bottom:8px">Short idea up top — annotate the white space as you teach. Press <kbd>R</kbd> for the worked example.</p>
+      <p class="sub" style="margin-bottom:8px">Watch and listen for the big idea. We’ll check a worked example together.</p>
       <div class="teach-panels">
         <div class="teach-board">
           <div class="tb-head">
@@ -1072,13 +1078,13 @@ function renderSlide(){
   }
   else if(phase==='annotate'){
     const a = f.annotate;
-    html = `${toplineHtml('annotate','Live annotation · model it')}
+    html = `${toplineHtml('annotate','Board work')}
       <h1 class="title">On the board, together</h1>
-      <p class="sub" style="margin-bottom:8px">Lead at the top — annotate the white space as you model. Full step script is in <kbd>T</kbd> notes.</p>
+      <p class="sub" style="margin-bottom:8px">Follow each step. Ask if a step doesn’t make sense yet.</p>
       <div class="annotate-panel">
         <div class="teach-board">
           <div class="tb-head">
-            <div class="tb-kicker">Hook solution · model it</div>
+            <div class="tb-kicker">Solving the hook · step by step</div>
             <div class="tb-lead">${annotateBoardLead(a)}</div>
           </div>
           <div class="tb-space" aria-hidden="true"></div>
@@ -1086,9 +1092,9 @@ function renderSlide(){
       </div>`;
   }
   else if(phase==='wedo'){
-    html = `${toplineHtml('wedo','We do · guided practice')}
+    html = `${toplineHtml('wedo','Together')}
       <h1 class="title">Let's try these together</h1>
-      <p class="sub"><b>Tip:</b> ${wedoTeachTip(l, f)} · Annotate below, then <kbd>R</kbd> to reveal.</p>
+      <p class="sub">${wedoStudentTip()}</p>
       <div class="wedo-panels">${f.wedo.map((q,i)=>`
         <div class="teach-board">
           <div class="tb-head">
@@ -1100,25 +1106,25 @@ function renderSlide(){
   }
   else if(phase==='practice'){
     const pr = f.practice;
-    html = `${toplineHtml('practice','Independent practice · you do')}
+    html = `${toplineHtml('practice','Your turn')}
       <h1 class="title">Your turn — quiet maths</h1>
-      <p class="sub">Work in your notebook. Show every step. Fast finishers try the soaker.</p>
+      <p class="sub">Work in your notebook. Show every step. Finished early? Try the <b>think harder</b> challenge.</p>
       <div class="body-scroll">
         <div class="practice-notebook">
           <h4>Notebook practice</h4>
           <ol>${pr.primary.map(q=>`<li>${q.prompt}</li>`).join('')}</ol>
         </div>
-        ${pr.soaker?`<div class="soaker"><b>SOAKER</b>${pr.soaker}</div>`:''}
+        ${pr.soaker?`<div class="soaker"><b>THINK HARDER</b>${pr.soaker}</div>`:''}
         ${pr.words?.length?`<div class="word-mini">
-          <h4>🌍 Word problems (stretch)</h4>
+          <h4>🌍 Story problems</h4>
           <div class="word-list">${pr.words.map((w,i)=>`<div class="word-item"><span class="n">${i+1}</span><span>${w.prompt}</span></div>`).join('')}</div>
         </div>`:''}
       </div>`;
   }
   else if(phase==='exit'){
-    html = `${toplineHtml('exit','Check for understanding')}
-      <h1 class="title">Exit ticket</h1>
-      <p class="sub">Quick check before you go. On a slip or in your book — press <kbd>R</kbd> to reveal answers.</p>
+    html = `${toplineHtml('exit','Exit check')}
+      <h1 class="title">Exit check</h1>
+      <p class="sub">Quick check before you go — on a slip or in your book.</p>
       <div class="exit-grid">${f.exit.map((q,i)=>`
         <div class="exit-card"><span class="en">${i+1}</span><div class="eq">${q.prompt}</div></div>`).join('')}</div>`;
   }
